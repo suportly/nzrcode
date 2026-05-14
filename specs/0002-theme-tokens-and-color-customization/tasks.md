@@ -11,7 +11,7 @@
 
 ### T001 — Smoke tests RED
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** —
 - **Files:**
   - create: `test/nzrcode-theme/test_tokens_shape.sh`
@@ -32,7 +32,7 @@
 
 ### T002 — NZR_TOKENS module
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - create: `src/vs/workbench/browser/parts/nzr/theme.ts`
@@ -47,7 +47,7 @@
 
 ### T003 — NZR Dark theme JSON
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - create: `extensions/theme-defaults/themes/nzr-dark.json`
@@ -72,7 +72,7 @@
 
 ### T004 — Registrar tema em extensions/theme-defaults
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T003
 - **Files:**
   - modify: `extensions/theme-defaults/package.json`
@@ -86,7 +86,7 @@
 
 ### T005 — Default dark theme = NZR Dark
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T004
 - **Files:**
   - modify: `src/vs/workbench/services/themes/common/workbenchThemeService.ts`
@@ -99,7 +99,7 @@
 
 ### T006 — product.json onboardingThemes promove NZR Dark
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T005
 - **Files:**
   - modify: `product.json`
@@ -112,7 +112,7 @@
 
 ### T007 — Verify all smoke tests GREEN
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T006
 - **Files:**
   - create: `specs/0002-theme-tokens-and-color-customization/evidence/run_all_output.txt`

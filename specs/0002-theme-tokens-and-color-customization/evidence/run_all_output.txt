@@ -1,0 +1,13 @@
+=== test_tokens_shape.sh ===
+PASS: NZR_TOKENS shape and brand-critical values
+
+=== test_nzr_dark_json.sh ===
+PASS: nzr-dark.json structure (108 colors mapped)
+
+=== test_default_theme.sh ===
+PASS: default dark theme is 'NZR Dark'
+
+=== test_theme_registration.sh ===
+PASS: NZR Dark registered in theme-defaults extension
+
+Summary: all NZR theme smoke tests passed
