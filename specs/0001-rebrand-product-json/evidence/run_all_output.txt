@@ -1,0 +1,13 @@
+=== test_product_json.sh ===
+PASS: product.json brand identity
+
+=== test_icons_exist.sh ===
+PASS: brand assets present and consistent
+
+=== test_no_residual_code_oss.sh ===
+PASS: no residual 'code-oss' in branding paths
+
+=== test_resource_renames.sh ===
+PASS: upstream-named resource files removed
+
+Summary: all brand smoke tests passed

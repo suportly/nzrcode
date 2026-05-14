@@ -20,7 +20,7 @@
 
 ### T001 — Smoke tests da identidade da marca (RED)
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** —
 - **Files:**
   - create: `test/nzrcode-brand/test_product_json.sh`
@@ -44,7 +44,7 @@
 
 ### T002 — SVG fonte do wordmark e tokens de cor
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - create: `resources/nzrcode-brand/wordmark.svg`
@@ -61,7 +61,7 @@
 
 ### T003 — Script `generate-icons.mjs` (write + check modes)
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - create: `build/lib/nzrcode/generate-icons.mjs`
@@ -79,7 +79,7 @@
 
 ### T004 — Fontes JetBrains Mono + licença
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** —
 - **Files:**
   - create: `resources/fonts/JetBrainsMono-Regular.woff2`
@@ -99,7 +99,7 @@
 
 ### T005 — CREDITS.md com atribuição do fork e da fonte
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T004
 - **Files:**
   - create: `CREDITS.md`
@@ -111,7 +111,7 @@
 
 ### T006 — Gerar ícones binários (icns/png) via script
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002, T003
 - **Files:**
   - create: `resources/darwin/nzrcode.icns`
@@ -127,7 +127,7 @@
 
 ### T007 — Reescrever product.json com identificadores NZRCode
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T006
 - **Files:**
   - modify: `product.json`
@@ -167,7 +167,7 @@
 
 ### T008 — Validar smoke tests GREEN
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T006, T007
 - **Files:** none (execução)
 - **Spec scenarios:** Story 1 cenários 1–4 · Story 2 cenário 2
@@ -178,7 +178,7 @@
 
 ### T009 — Renomear Linux desktop entries
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T008
 - **Files:**
   - rename: `resources/linux/code.desktop` → `resources/linux/nzrcode.desktop`
@@ -193,7 +193,7 @@
 
 ### T010 — Atualizar referências em build/ e resources/
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T009
 - **Files:**
   - modify: `build/linux/**/*`
@@ -211,7 +211,7 @@
 
 ### T011 — Atualizar appdata.xml
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T010
 - **Files:**
   - rename + modify: `resources/linux/code.appdata.xml` → `resources/linux/nzrcode.appdata.xml`
