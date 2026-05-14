@@ -17,7 +17,7 @@ require_file 'src/vs/platform/nzr/common/pipelineState.ts'
 require_file 'src/vs/platform/nzr/common/stationRegistry.ts'
 require_file 'src/vs/workbench/services/nzr/common/stationRegistryService.ts'
 require_file 'src/vs/workbench/services/nzr/common/nzr.contribution.ts'
-require_file 'src/vs/platform/nzr/test/common/stationRegistry.test.ts'
+require_file 'src/vs/workbench/services/nzr/test/common/stationRegistryService.test.ts'
 
 if [ "$fail" -eq 0 ]; then
   echo "PASS: station registry feature files present"

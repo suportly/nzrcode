@@ -27,7 +27,7 @@ files=(
   "$ROOT/src/vs/platform/nzr/common/stationRegistry.ts"
   "$ROOT/src/vs/workbench/services/nzr/common/stationRegistryService.ts"
   "$ROOT/src/vs/workbench/services/nzr/common/nzr.contribution.ts"
-  "$ROOT/src/vs/platform/nzr/test/common/stationRegistry.test.ts"
+  "$ROOT/src/vs/workbench/services/nzr/test/common/stationRegistryService.test.ts"
 )
 
 for f in "${files[@]}"; do
