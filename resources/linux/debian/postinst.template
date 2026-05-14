@@ -22,7 +22,9 @@ if hash update-mime-database 2>/dev/null; then
 	update-mime-database /usr/share/mime
 fi
 
-if [ "@@NAME@@" != "code-oss" ]; then
+# Skip the Microsoft apt repo registration for community / fork variants
+# (upstream and this fork). nzrcode-allow:code-oss-ref
+if [ "@@NAME@@" != "code-oss" ] && [ "@@NAME@@" != "nzrcode" ]; then # nzrcode-allow:code-oss-ref
 	# Remove the legacy bin command if this is the stable build
 	if [ "@@NAME@@" = "code" ]; then
 		rm -f /usr/local/bin/code

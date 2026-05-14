@@ -43,10 +43,10 @@ function prepareDebPackage(arch: string) {
 	return async function () {
 		const dependencies = await getDependencies('deb', binaryDir, product.applicationName, debArch);
 
-		const desktop = gulp.src('resources/linux/code.desktop', { base: '.' })
+		const desktop = gulp.src('resources/linux/nzrcode.desktop', { base: '.' })
 			.pipe(rename('usr/share/applications/' + product.applicationName + '.desktop'));
 
-		const desktopUrlHandler = gulp.src('resources/linux/code-url-handler.desktop', { base: '.' })
+		const desktopUrlHandler = gulp.src('resources/linux/nzrcode-url-handler.desktop', { base: '.' })
 			.pipe(rename('usr/share/applications/' + product.applicationName + '-url-handler.desktop'));
 
 		const desktops = es.merge(desktop, desktopUrlHandler)
@@ -57,18 +57,18 @@ function prepareDebPackage(arch: string) {
 			.pipe(replace('@@ICON@@', product.linuxIconName))
 			.pipe(replace('@@URLPROTOCOL@@', product.urlProtocol));
 
-		const appdata = gulp.src('resources/linux/code.appdata.xml', { base: '.' })
+		const appdata = gulp.src('resources/linux/nzrcode.appdata.xml', { base: '.' })
 			.pipe(replace('@@NAME_LONG@@', product.nameLong))
 			.pipe(replace('@@NAME@@', product.applicationName))
 			.pipe(replace('@@LICENSE@@', product.licenseName))
 			.pipe(rename('usr/share/appdata/' + product.applicationName + '.appdata.xml'));
 
-		const workspaceMime = gulp.src('resources/linux/code-workspace.xml', { base: '.' })
+		const workspaceMime = gulp.src('resources/linux/nzrcode-workspace.xml', { base: '.' })
 			.pipe(replace('@@NAME_LONG@@', product.nameLong))
 			.pipe(replace('@@NAME@@', product.applicationName))
 			.pipe(rename('usr/share/mime/packages/' + product.applicationName + '-workspace.xml'));
 
-		const icon = gulp.src('resources/linux/code.png', { base: '.' })
+		const icon = gulp.src('resources/linux/nzrcode.png', { base: '.' })
 			.pipe(rename('usr/share/pixmaps/' + product.linuxIconName + '.png'));
 
 		const bash_completion = gulp.src('resources/completions/bash/code')
@@ -153,10 +153,10 @@ function prepareRpmPackage(arch: string) {
 	return async function () {
 		const dependencies = await getDependencies('rpm', binaryDir, product.applicationName, rpmArch);
 
-		const desktop = gulp.src('resources/linux/code.desktop', { base: '.' })
+		const desktop = gulp.src('resources/linux/nzrcode.desktop', { base: '.' })
 			.pipe(rename('BUILD/usr/share/applications/' + product.applicationName + '.desktop'));
 
-		const desktopUrlHandler = gulp.src('resources/linux/code-url-handler.desktop', { base: '.' })
+		const desktopUrlHandler = gulp.src('resources/linux/nzrcode-url-handler.desktop', { base: '.' })
 			.pipe(rename('BUILD/usr/share/applications/' + product.applicationName + '-url-handler.desktop'));
 
 		const desktops = es.merge(desktop, desktopUrlHandler)
@@ -167,18 +167,18 @@ function prepareRpmPackage(arch: string) {
 			.pipe(replace('@@ICON@@', product.linuxIconName))
 			.pipe(replace('@@URLPROTOCOL@@', product.urlProtocol));
 
-		const appdata = gulp.src('resources/linux/code.appdata.xml', { base: '.' })
+		const appdata = gulp.src('resources/linux/nzrcode.appdata.xml', { base: '.' })
 			.pipe(replace('@@NAME_LONG@@', product.nameLong))
 			.pipe(replace('@@NAME@@', product.applicationName))
 			.pipe(replace('@@LICENSE@@', product.licenseName))
 			.pipe(rename('BUILD/usr/share/appdata/' + product.applicationName + '.appdata.xml'));
 
-		const workspaceMime = gulp.src('resources/linux/code-workspace.xml', { base: '.' })
+		const workspaceMime = gulp.src('resources/linux/nzrcode-workspace.xml', { base: '.' })
 			.pipe(replace('@@NAME_LONG@@', product.nameLong))
 			.pipe(replace('@@NAME@@', product.applicationName))
 			.pipe(rename('BUILD/usr/share/mime/packages/' + product.applicationName + '-workspace.xml'));
 
-		const icon = gulp.src('resources/linux/code.png', { base: '.' })
+		const icon = gulp.src('resources/linux/nzrcode.png', { base: '.' })
 			.pipe(rename('BUILD/usr/share/pixmaps/' + product.linuxIconName + '.png'));
 
 		const bash_completion = gulp.src('resources/completions/bash/code')
@@ -239,11 +239,11 @@ function prepareSnapPackage(arch: string) {
 
 	return function () {
 		// A desktop file that is placed in snap/gui will be placed into meta/gui verbatim.
-		const desktop = gulp.src('resources/linux/code.desktop', { base: '.' })
+		const desktop = gulp.src('resources/linux/nzrcode.desktop', { base: '.' })
 			.pipe(rename(`snap/gui/${product.applicationName}.desktop`));
 
 		// A desktop file that is placed in snap/gui will be placed into meta/gui verbatim.
-		const desktopUrlHandler = gulp.src('resources/linux/code-url-handler.desktop', { base: '.' })
+		const desktopUrlHandler = gulp.src('resources/linux/nzrcode-url-handler.desktop', { base: '.' })
 			.pipe(rename(`snap/gui/${product.applicationName}-url-handler.desktop`));
 
 		const desktops = es.merge(desktop, desktopUrlHandler)
@@ -255,7 +255,7 @@ function prepareSnapPackage(arch: string) {
 			.pipe(replace('@@URLPROTOCOL@@', product.urlProtocol));
 
 		// An icon that is placed in snap/gui will be placed into meta/gui verbatim.
-		const icon = gulp.src('resources/linux/code.png', { base: '.' })
+		const icon = gulp.src('resources/linux/nzrcode.png', { base: '.' })
 			.pipe(rename(`snap/gui/${product.linuxIconName}.png`));
 
 		const code = gulp.src(binaryDir + '/**/*', { base: binaryDir })
