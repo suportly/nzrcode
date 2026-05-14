@@ -25,7 +25,13 @@ fi
 
 # Types
 require_in 'export type PipelineStage\s*=' "$TYPES"
-require_in "'specify'.*'clarify'.*'plan'.*'tasks'.*'implement'.*'review'.*'done'.*'failed'.*'idle'" "$TYPES"
+# All 9 PipelineStage variants must appear in the file (any order/layout).
+for stage in specify clarify plan tasks implement review done failed idle; do
+  if ! grep -Eq "'${stage}'" "$TYPES"; then
+    echo "FAIL: PipelineStage missing literal '${stage}'"
+    fail=1
+  fi
+done
 require_in 'export interface (Station|SpecRef|PipelineState|ClarifyMarker|ReviewFinding)\b' "$TYPES"
 for iface in Station SpecRef PipelineState ClarifyMarker ReviewFinding ClaudeProcess; do
   if ! grep -Eq "export interface ${iface}\b" "$TYPES"; then
