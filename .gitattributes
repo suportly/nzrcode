@@ -9,3 +9,6 @@ ThirdPartyNotices.txt eol=crlf
 *.sh eol=lf
 *.rtf -text
 **/*.json linguist-language=jsonc
+
+*.woff2 binary
+*.icns binary
