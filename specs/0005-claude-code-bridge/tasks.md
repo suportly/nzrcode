@@ -10,7 +10,7 @@
 ## Task list
 
 ### T001 — Smoke + mocha stub (RED)
-- **Status:** pending
+- **Status:** done
 - **Depends on:** —
 - **Files:**
   - create: `test/nzrcode-claude/test_files_exist.sh`
@@ -27,7 +27,7 @@
   - [ ] Commit: `test(nzr-claude): T001 add bridge smoke suite + mocha stub (RED)`.
 
 ### T002 — Types + interface
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - create: `src/vs/platform/nzr/common/claudeCode.ts`
@@ -39,7 +39,7 @@
   - [ ] Commit: `feat(nzr): T002 add IClaudeCodeBridge interface and session types`.
 
 ### T003 — Impl Electron
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - create: `src/vs/workbench/services/nzr/electron-browser/claudeCodeBridge.ts`
@@ -54,7 +54,7 @@
   - [ ] Commit: `feat(nzr): T003 implement ClaudeCodeBridge (spawn + streaming)`.
 
 ### T004 — Mocha test
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T003
 - **Files:**
   - modify: `src/vs/workbench/services/nzr/test/common/claudeCodeBridge.test.ts`
@@ -64,7 +64,7 @@
   - [ ] Commit: `test(nzr): T004 add ClaudeCodeBridge mocha tests`.
 
 ### T005 — Registrar singleton
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T004
 - **Files:**
   - modify: `src/vs/workbench/services/nzr/electron-browser/nzr.electron.contribution.ts`
@@ -74,7 +74,7 @@
   - [ ] Commit: `feat(nzr): T005 register ClaudeCodeBridge singleton`.
 
 ### T006 — Verify + push + PR #5
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T005
 - **Files:**
   - create: `specs/0005-claude-code-bridge/evidence/run_all_output.txt`
