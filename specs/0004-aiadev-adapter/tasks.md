@@ -11,7 +11,7 @@
 
 ### T001 — Smoke tests + mocha stub (RED)
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** —
 - **Files:**
   - create: `test/nzrcode-adapter/test_files_exist.sh`
@@ -32,7 +32,7 @@
 
 ### T002 — Pure parser
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - create: `src/vs/workbench/services/nzr/common/clarifyMarkerParser.ts`
@@ -48,7 +48,7 @@
 
 ### T003 — Mocha test do parser (5 casos)
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - modify: `src/vs/workbench/services/nzr/test/common/clarifyMarkerParser.test.ts`
@@ -65,7 +65,7 @@
 
 ### T004 — Types + interface
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T003
 - **Files:**
   - create: `src/vs/platform/nzr/common/aiadev.ts`
@@ -87,7 +87,7 @@
 
 ### T005 — Electron impl: spawn + watcher
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T004
 - **Files:**
   - create: `src/vs/workbench/services/nzr/electron-browser/aiadevAdapter.ts`
@@ -105,7 +105,7 @@
 
 ### T006 — Electron contribution + workbench wiring
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T005
 - **Files:**
   - create: `src/vs/workbench/services/nzr/electron-browser/nzr.electron.contribution.ts`
@@ -119,7 +119,7 @@
 
 ### T007 — Verify GREEN + push + PR
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T006
 - **Files:**
   - create: `specs/0004-aiadev-adapter/evidence/run_all_output.txt`
