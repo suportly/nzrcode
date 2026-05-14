@@ -33,7 +33,10 @@ test/componentFixtures/.screenshots/*
 dist
 .playwright-cli
 .playwright-mcp
-.claude/
+# NZRCode fork: track .claude/ (AIADev pipeline) so the framework travels with the repo.
+# Upstream ignores it; we explicitly opt in.
+.claude/settings.local.json
+.claude/*.local.md
 .agents/agents/*.local.md
 .github/agents/*.local.md
 .agents/agents/*.local.agent.md
