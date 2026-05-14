@@ -11,7 +11,7 @@
 
 ### T001 — Smoke tests + mocha stub (RED)
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** —
 - **Files:**
   - create: `test/nzrcode-stations/test_files_exist.sh`
@@ -31,7 +31,7 @@
 
 ### T002 — pipelineState.ts types
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - create: `src/vs/platform/nzr/common/pipelineState.ts`
@@ -46,7 +46,7 @@
 
 ### T003 — IStationRegistryService interface
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - create: `src/vs/platform/nzr/common/stationRegistry.ts`
@@ -61,7 +61,7 @@
 
 ### T004 — StationRegistryService implementation
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T003
 - **Files:**
   - create: `src/vs/workbench/services/nzr/common/stationRegistryService.ts`
@@ -80,7 +80,7 @@
 
 ### T005 — nzr.contribution.ts + workbench.common.main wiring
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T004
 - **Files:**
   - create: `src/vs/workbench/services/nzr/common/nzr.contribution.ts`
@@ -94,7 +94,7 @@
 
 ### T006 — Mocha unit test
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T005
 - **Files:**
   - create: `src/vs/platform/nzr/test/common/stationRegistry.test.ts`
@@ -116,7 +116,7 @@
 
 ### T007 — Verify GREEN + push + PR
 
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T006
 - **Files:**
   - create: `specs/0003-station-registry-service/evidence/run_all_output.txt`

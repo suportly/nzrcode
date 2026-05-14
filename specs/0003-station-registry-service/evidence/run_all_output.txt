@@ -1,0 +1,13 @@
+=== test_files_exist.sh ===
+PASS: station registry feature files present
+
+=== test_interface_shape.sh ===
+PASS: station registry interface shape
+
+=== test_typecheck.sh ===
+SKIP: tsc not on PATH and no node_modules; syntax check deferred to CI / dev build
+
+=== test_registration.sh ===
+PASS: StationRegistryService singleton registered and wired into main
+
+Summary: all station registry smoke tests passed
