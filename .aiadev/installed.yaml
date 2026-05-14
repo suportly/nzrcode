@@ -1,0 +1,137 @@
+aiadev_version: 0.18.0
+installed_presets:
+- name: lean
+  version: 1.0.0
+  installed_at: '2026-05-14T12:11:03Z'
+  variables:
+    PROJECT_NAME: nzrcode
+  files:
+  - path: CLAUDE.md
+    sha256: c560290ae2577f3e125fcd37fceb29409789925908d570a1b8676bf423d75ad5
+    role: agent_file
+  - path: .claude/rules/api-conventions.md
+    sha256: 2b67d80629c889545e013ac0b3856f47bfe9e4ff180af02ae582c9f9751377b3
+    role: rule
+  - path: .claude/rules/code-style.md
+    sha256: c0016e44d64612630f7367cb4344683e8240d4b75cbad97a45e9cf7a23c68f1b
+    role: rule
+  - path: .claude/rules/git-workflow.md
+    sha256: b542226f4314e3af671329e67139a284fa59065f3152a58796abb8d8886e42e0
+    role: rule
+  - path: .claude/rules/security.md
+    sha256: ef75e3b220c1f5ab86556fc2f29a5152c9fc25f2cc5db5893324f5a138c61a9f
+    role: rule
+  - path: .claude/rules/slash-commands.md
+    sha256: 60f2bc5847c8c6cc4615c19dd73b29a1c6832a9784954603753a334e9c5eafaa
+    role: rule
+  - path: .claude/rules/terse-mode.md
+    sha256: a248dce9bfa9284888cfe68e6ddc6861c44021ba31e3397d527873554b6c4e9a
+    role: rule
+  - path: .claude/rules/testing.md
+    sha256: 457b64c31fe6e05935341aca3ea02a5c07c371d249265d2c7b25d37ea636950d
+    role: rule
+  - path: .claude/commands/aia/analyze.md
+    sha256: ec44fd5992c427f426f474c36d8f28067b48cd01e3b07822aa06d725c44b2dc2
+    role: command
+  - path: .claude/commands/aia/checklist.md
+    sha256: e7d49781e8ef8432efdd7a68260a4736dd45614173a01689ef8c55087027a0f0
+    role: command
+  - path: .claude/commands/aia/clarify.md
+    sha256: a7d396c9c00cc5a7122398e14ec505f2dba2a912348ed3fffc4b0a87514065b4
+    role: command
+  - path: .claude/commands/aia/constitution.md
+    sha256: 7c9406fbe793936f61872e448bd5f2301fb30874bedaa71b13fffaaaf4935cf2
+    role: command
+  - path: .claude/commands/aia/finishing-a-branch.md
+    sha256: 9b0c87ce62ee407ca409b063b901c62c548acc16df00cb68baf88df6a44b8732
+    role: command
+  - path: .claude/commands/aia/frontend-design.md
+    sha256: 03bb3673f1d50cde7e21dd05aba567e061004e9e7c4f175a025efec1a7c6cc89
+    role: command
+  - path: .claude/commands/aia/implement.md
+    sha256: 7b5eec558e451474bca74f90c421d8599c9f8db6e0220c20a2263f8f8000aa9d
+    role: command
+  - path: .claude/commands/aia/lang.md
+    sha256: ed6daa25193bfe8ec7d124ba8048c7fe6c25233e47804c0c3660fb36d76e8507
+    role: command
+  - path: .claude/commands/aia/plan.md
+    sha256: 728c296f5cba5915ea7a40b8b3df89539c7fe33deed9dd3f0489d3bbd9b84e27
+    role: command
+  - path: .claude/commands/aia/requesting-code-review.md
+    sha256: 8ad840f980483d673e9000af3f9580743cb3ac85f7cce2a5df1ce2b2bda510b0
+    role: command
+  - path: .claude/commands/aia/specify.md
+    sha256: 13d13a99645152764426a7129331d47dda5b67394117df89dd89a6a6c29f1217
+    role: command
+  - path: .claude/commands/aia/sync.md
+    sha256: 06dd2bd09cae5b1882cb1829aa67e62ed9333e90da1c953fb0aaec1518bb25a4
+    role: command
+  - path: .claude/commands/aia/systematic-debugging.md
+    sha256: 118197900fd8d2928ae309fb5f40761cc29a1e465b80ffd6078b070179ba2de0
+    role: command
+  - path: .claude/commands/aia/tasks.md
+    sha256: 3039cf1f7cbf03ccb02db8d52dd9fe23aecacb47cc11445cb99ad00d7bf110b8
+    role: command
+  - path: .claude/commands/aia/test-driven-development.md
+    sha256: 3d050a948be319f09cbfedf4a17c6cb114de630e86cfc1d398c2abc66cd8ddfb
+    role: command
+  - path: .claude/commands/aia/using-ai-augmented-developer.md
+    sha256: 25ce15293ca97886bb71302833bd8f9a2e29389d88d297c3e1c7afaadc167868
+    role: command
+  - path: .claude/agents/code-reviewer.md
+    sha256: be2f7829a6b5f411849cc097d148b34df1325d9d2165e549f4a0f56a65dd90f1
+    role: agent
+  - path: .claude/agents/plan-document-reviewer.md
+    sha256: d2383d89b3fd4558eaeeb7ae7de3b41a46077f6bcc49c2c4fddff7b7e6685cd7
+    role: agent
+  - path: .claude/agents/spec-document-reviewer.md
+    sha256: f5a88075753fb40f3f0cf8200c97dbd036deaef40767d31e0c9ddf57843ccb39
+    role: agent
+  - path: .claude/skills/analyze/SKILL.md
+    sha256: 12ccb6af63a4b139409631019eb95730f6bdb5778090ee2bc30fa74fbdca9d46
+    role: skill
+  - path: .claude/skills/checklist/SKILL.md
+    sha256: 5cd4a5d8297f8b4948af7bd596187ca7bfb2c91bead1184f40e5bfcb380dc842
+    role: skill
+  - path: .claude/skills/clarify/SKILL.md
+    sha256: 9169471d382ceb5540e1cf27049f43306dacc090e0b77362f6aba2efb2d14e67
+    role: skill
+  - path: .claude/skills/constitution/SKILL.md
+    sha256: 6d5e56dddaf16d3efc5c16b7e2d9d0aa0fb1f84ecd6b6b810854350ce00960aa
+    role: skill
+  - path: .claude/skills/finishing-a-branch/SKILL.md
+    sha256: 726ff20823677b2093c347e20ec2705fe1dc5760e07cb919e895d01a30430e6f
+    role: skill
+  - path: .claude/skills/frontend-design/SKILL.md
+    sha256: 5f0e44c01f0de36e3fec7216e2a847748294e51f9018cfb96d18225cf9338ead
+    role: skill
+  - path: .claude/skills/help/SKILL.md
+    sha256: 9d77b5a3bac0e7d38675d6811dabba8c55e3807d3448efd991f512264790ee2c
+    role: skill
+  - path: .claude/skills/implement/SKILL.md
+    sha256: c06b5636111a7e7a40ed4f72d2fefd42eb7bcf4b1212743f05608573aaf41369
+    role: skill
+  - path: .claude/skills/plan/SKILL.md
+    sha256: cf4cfd6aae2d48112eae63ee5f10be68bc71cc157fd69c8a211ddc58e694dc67
+    role: skill
+  - path: .claude/skills/requesting-code-review/SKILL.md
+    sha256: 91fb2855112050b7a25173d828c5be0d07357d5f03a953a7a23ed16cbba7092b
+    role: skill
+  - path: .claude/skills/specify/SKILL.md
+    sha256: 1bddc42e7e9b448c0f89c4c9117545a95be6ba627c65ef1e2571a6599e6bbf77
+    role: skill
+  - path: .claude/skills/systematic-debugging/SKILL.md
+    sha256: 471280c8aaa71896532e87a3e14d8016b943bec509ea83986061977c882c9edf
+    role: skill
+  - path: .claude/skills/tasks/SKILL.md
+    sha256: 64edae3e004f77970f4dd7edee6b5ec8d701ec5a5129167893ef7cf781a12b56
+    role: skill
+  - path: .claude/skills/test-driven-development/SKILL.md
+    sha256: 815d47eea8c216f7bb8300e41a7b3df00ef391d991ed7f2ecde0723c6fe8ef89
+    role: skill
+  - path: .claude/skills/using-ai-augmented-developer/SKILL.md
+    sha256: ad2b7aae9ad1178f3f5257e8f0fa8f213cc37d29c1aa8963973df1718bd93849
+    role: skill
+  - path: .mcp.json
+    sha256: d8e397af03b5b032f21d0aa967086f0c78b33c87b76f2e9898ae0a144df7de02
+    role: mcp
