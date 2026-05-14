@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+	<id>@@NAME@@.desktop</id>
+	<metadata_license>@@LICENSE@@</metadata_license>
+	<project_license>@@LICENSE@@</project_license>
+	<name>@@NAME_LONG@@</name>
+	<url type="homepage">https://github.com/suportly/nzrcode</url>
+	<url type="bugtracker">https://github.com/suportly/nzrcode/issues</url>
+	<summary>NZRCode. The AI-augmented developer's control room.</summary>
+	<description>
+		<p>NZRCode is a fork of Visual Studio Code OSS reframed for developers who work augmented by AI rather than typing code. The default surface is a Mission Control — one station per repository, each running a specify → clarify → plan → tasks → implement pipeline — while the editor, terminal, and file explorer remain available behind the scenes.</p>
+	</description>
+	<provides>
+		<binary>@@NAME@@</binary>
+	</provides>
+</component>
