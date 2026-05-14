@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <title>NZRCode wordmark — placeholder</title>
+  <desc>NZR/CODE in monospace. Slash in amber accent. Replace this file to refresh the brand.</desc>
+
+  <rect width="1024" height="1024" fill="#0d0c0a"/>
+
+  <!-- Amber slash, centered. Geometric primitive so the icon renders the same
+       regardless of which monospace fallback the rasteriser picks. -->
+  <polygon points="600,168 776,168 424,856 248,856" fill="#ffa45c"/>
+
+  <!-- Wordmark. Falls back to system monospace when JetBrains Mono is not
+       available; canonical icons are rendered by build/lib/nzrcode/generate-icons.mjs
+       with the bundled woff2 explicitly registered. -->
+  <g font-family="'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace" font-weight="700" fill="#ece6dd">
+    <text x="180" y="448" font-size="156" letter-spacing="-4">NZR</text>
+    <text x="528" y="688" font-size="156" letter-spacing="-4">CODE</text>
+  </g>
+</svg>
