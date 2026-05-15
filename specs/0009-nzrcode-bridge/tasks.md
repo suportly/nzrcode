@@ -56,7 +56,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T002 declare pair/revoke commands with i18n strings`.
 
 ### T003 — Registrar nos build targets do fork
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - modify: `product.json` (lista de bundled extensions — confirmar campo correto lendo o arquivo)
