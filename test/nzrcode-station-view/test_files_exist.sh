@@ -11,8 +11,8 @@ FILES=(
   "src/vs/workbench/contrib/nzr/browser/stationView.ts"
   "src/vs/workbench/contrib/nzr/browser/stationView.contribution.ts"
   "src/vs/workbench/contrib/nzr/browser/media/stationView.css"
-  "src/vs/workbench/services/nzr/test/common/stationCard.test.ts"
-  "src/vs/workbench/services/nzr/test/common/pipelineRail.test.ts"
+  "src/vs/workbench/contrib/nzr/test/browser/stationCard.test.ts"
+  "src/vs/workbench/contrib/nzr/test/browser/pipelineRail.test.ts"
 )
 
 fail=0
