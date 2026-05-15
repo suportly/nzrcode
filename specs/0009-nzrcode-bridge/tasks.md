@@ -228,7 +228,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T014 enforce 5 MB outbound backlog with client_too_slow`.
 
 ### T015 — Handler `system.hello`
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T013
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/rpc/system.ts`
