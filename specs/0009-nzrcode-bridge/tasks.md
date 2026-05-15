@@ -87,7 +87,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T004 add JSON-RPC 2.0 envelope types and framing`.
 
 ### T005 — Protocol: Method/Event registries
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T004
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/protocol/methods.ts`
