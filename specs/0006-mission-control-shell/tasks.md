@@ -10,7 +10,7 @@
 ## Task list
 
 ### T001 — Smoke + mocha stubs (RED)
-- **Status:** pending
+- **Status:** done
 - **Depends on:** —
 - **Files:**
   - create: `test/nzrcode-mission-control/{test_files_exist,test_interface_shape,test_command_registered,run_all}.sh`
@@ -25,7 +25,7 @@
   - [ ] Commit: `test(nzr-mc): T001 add Mission Control smoke suite + mocha stubs (RED)`.
 
 ### T002 — gridLayout pure function + tests
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - create: `src/vs/workbench/services/nzr/common/gridLayout.ts`
@@ -44,7 +44,7 @@
   - [ ] Commit: `feat(nzr-mc): T002 add computeGridLayout pure function`.
 
 ### T003 — IMissionControlService interface
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - create: `src/vs/workbench/services/nzr/common/missionControl.ts`
@@ -55,7 +55,7 @@
   - [ ] Commit: `feat(nzr-mc): T003 add IMissionControlService interface`.
 
 ### T004 — MissionControlService impl + tests
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T003
 - **Files:**
   - create: `src/vs/workbench/services/nzr/common/missionControlService.ts`
@@ -75,7 +75,7 @@
   - [ ] Commit: `feat(nzr-mc): T004 implement MissionControlService with slot reflow`.
 
 ### T005 — Contribution (comando + context key)
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T004
 - **Files:**
   - create: `src/vs/workbench/contrib/nzr/browser/missionControl.contribution.ts`
@@ -88,7 +88,7 @@
   - [ ] Commit: `feat(nzr-mc): T005 register Mission Control toggle command and context key`.
 
 ### T006 — Wire singleton + workbench main
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T005
 - **Files:**
   - modify: `src/vs/workbench/services/nzr/common/nzr.contribution.ts`
@@ -99,7 +99,7 @@
   - [ ] Commit: `feat(nzr-mc): T006 register MissionControlService + load contribution`.
 
 ### T007 — Verify + push + PR #6
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T006
 - **Files:**
   - create: `specs/0006-mission-control-shell/evidence/run_all_output.txt`
