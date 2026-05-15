@@ -258,7 +258,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
 ### Phase 4 — RPC namespaces
 
 ### T017 — `commands.ts` (execute, list) + REQUIRES_ACTIVE_EDITOR list
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T016
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/rpc/commands.ts`
