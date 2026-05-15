@@ -133,7 +133,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
 ### Phase 2 — Auth + persistence
 
 ### T008 — `auth.ts` (token gen/validate, constant-time)
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/server/auth.ts`
