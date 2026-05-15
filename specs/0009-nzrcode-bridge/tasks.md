@@ -25,7 +25,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
 ### Phase 1 — Extension skeleton + protocol module
 
 ### T001 — Scaffold `extensions/nzrcode-bridge/`
-- **Status:** pending
+- **Status:** done
 - **Depends on:** —
 - **Files:**
   - create: `extensions/nzrcode-bridge/package.json`
