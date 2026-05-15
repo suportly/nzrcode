@@ -202,7 +202,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T012 add loopback-only WebSocket server`.
 
 ### T013 — `dispatcher.ts` JSON-RPC routing + auth gate
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T012, T008
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/server/dispatcher.ts`
