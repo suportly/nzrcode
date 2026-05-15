@@ -48,3 +48,12 @@ export {
 	BRIDGE_ERROR_DEFAULT_MESSAGE,
 	bridgeError,
 } from './errors';
+
+export {
+	QrDecodeError,
+	encodeQrPayload,
+	decodeQrPayload,
+	type EndpointNet,
+	type QrEndpoint,
+	type QrPayloadV1,
+} from './qr';

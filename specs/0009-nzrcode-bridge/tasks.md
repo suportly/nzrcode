@@ -115,7 +115,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T006 add bridge error codes`.
 
 ### T007 — Protocol: QR payload v1 schema
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T004
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/protocol/qr.ts`
