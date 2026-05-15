@@ -465,4 +465,7 @@ import './contrib/editTelemetry/browser/editTelemetry.contribution.js';
 // Opener
 import './contrib/opener/browser/opener.contribution.js';
 
+// NZRCode — Mission Control toggle command + context key
+import './contrib/nzr/browser/missionControl.contribution.js';
+
 //#endregion
