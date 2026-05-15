@@ -19,6 +19,25 @@
     "onStartupFinished"
   ],
   "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "nzrcode-bridge.pairIpad",
+        "title": "%command.pairIpad%",
+        "category": "%category%"
+      },
+      {
+        "command": "nzrcode-bridge.listPairedDevices",
+        "title": "%command.listPairedDevices%",
+        "category": "%category%"
+      },
+      {
+        "command": "nzrcode-bridge.revokeIpad",
+        "title": "%command.revokeIpad%",
+        "category": "%category%"
+      }
+    ]
+  },
   "scripts": {
     "compile": "gulp compile-extension:nzrcode-bridge",
     "watch": "gulp watch-extension:nzrcode-bridge"

@@ -43,7 +43,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T001 scaffold built-in extension skeleton`.
 
 ### T002 — `package.nls.json` + command contributions
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - create: `extensions/nzrcode-bridge/package.nls.json`
