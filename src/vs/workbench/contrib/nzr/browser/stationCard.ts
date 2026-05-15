@@ -5,26 +5,8 @@
 
 import { $, append } from '../../../../base/browser/dom.js';
 import { localize } from '../../../../nls.js';
-import { PipelineStage, Station } from '../../../../platform/nzr/common/pipelineState.js';
-
-/**
- * Local stage label used by the card head badge until T003 introduces
- * `pipelineRail.ts` (which will export a canonical `stageLabel`). After
- * T003 lands, this local function is removed and replaced by the import.
- */
-function stageLabel(stage: PipelineStage): string {
-	switch (stage) {
-		case 'specify': return localize('nzrStageSpecify', "Specify");
-		case 'clarify': return localize('nzrStageClarify', "Clarify");
-		case 'plan': return localize('nzrStagePlan', "Plan");
-		case 'tasks': return localize('nzrStageTasks', "Tasks");
-		case 'implement': return localize('nzrStageImplement', "Implement");
-		case 'review': return localize('nzrStageReview', "Review");
-		case 'done': return localize('nzrStageDone', "Done");
-		case 'failed': return localize('nzrStageFailed', "Failed");
-		case 'idle': return localize('nzrStageIdle', "Idle");
-	}
-}
+import { Station } from '../../../../platform/nzr/common/pipelineState.js';
+import { stageLabel } from './pipelineRail.js';
 
 /** Maximum chars of streamed output rendered inside a card's body. */
 export const STATION_CARD_OUTPUT_TAIL = 200;
