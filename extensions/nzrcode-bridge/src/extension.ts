@@ -4,14 +4,42 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as vscode from 'vscode';
-import { loadOrCreateState } from './server/state';
+import { maybeStartBridge, BridgeRuntime } from './bridge';
+import type { Logger } from './server/dispatcher';
 
-export function activate(_context: vscode.ExtensionContext): void {
-	// Load (or create) the persisted bridge state. The WS server is NOT started
-	// here — that lands in T016 (lazy bind based on pairedDevices presence).
-	loadOrCreateState();
+let _runtime: BridgeRuntime | undefined;
+
+function buildLogger(channel: vscode.OutputChannel): Logger {
+	const write = (level: string, msg: string, fields?: unknown): void => {
+		const payload = fields === undefined ? '' : ` ${JSON.stringify(fields)}`;
+		channel.appendLine(`[${level}] ${msg}${payload}`);
+	};
+	return {
+		info: (msg, fields) => write('info', msg, fields),
+		warn: (msg, fields) => write('warn', msg, fields),
+		error: (msg, fields) => write('error', msg, fields),
+	};
 }
 
-export function deactivate(): void {
-	// No-op; real teardown lands in T016.
+export async function activate(context: vscode.ExtensionContext): Promise<void> {
+	const channel = vscode.window.createOutputChannel('NZRCode Bridge');
+	context.subscriptions.push(channel);
+
+	const extensionVersion = (context.extension?.packageJSON as { version?: string } | undefined)?.version ?? '0.0.0';
+
+	_runtime = await maybeStartBridge({
+		serverVersion: extensionVersion,
+		logger: buildLogger(channel),
+	});
+
+	if (_runtime) {
+		context.subscriptions.push({ dispose: () => { void _runtime?.stop(); } });
+	}
+}
+
+export async function deactivate(): Promise<void> {
+	if (_runtime) {
+		await _runtime.stop();
+		_runtime = undefined;
+	}
 }

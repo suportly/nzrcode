@@ -241,7 +241,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T015 add system.hello handler`.
 
 ### T016 — Lazy WS bind + integration smoke (handshake round-trip)
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T014, T015
 - **Files:**
   - modify: `extensions/nzrcode-bridge/src/extension.ts` (activate bindar se state existe)
