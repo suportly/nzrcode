@@ -4,9 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as vscode from 'vscode';
+import { loadOrCreateState } from './server/state';
 
 export function activate(_context: vscode.ExtensionContext): void {
-	// Placeholder: real activation lands in T010 (state) and T016 (lazy WS bind).
+	// Load (or create) the persisted bridge state. The WS server is NOT started
+	// here — that lands in T016 (lazy bind based on pairedDevices presence).
+	loadOrCreateState();
 }
 
 export function deactivate(): void {

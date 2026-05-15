@@ -159,7 +159,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T009 add log redaction for tokens and file content`.
 
 ### T010 — `state.ts` lê/cria `~/.nzrcode/bridge.json` com 0600
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T008
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/server/state.ts`
