@@ -275,7 +275,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
 - **Notes:** Manter `REQUIRES_ACTIVE_EDITOR.md` sincronizado em PRs que adicionem novos comandos restritos.
 
 ### T018 — `workspace.ts` (listFolders, findFiles, readFile, writeFile)
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T016
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/rpc/workspace.ts`
