@@ -41,3 +41,10 @@ export {
 	EventName,
 	type EventPayload,
 } from './events';
+
+export {
+	BridgeErrorCode,
+	BRIDGE_ERROR_JSONRPC_CODE,
+	BRIDGE_ERROR_DEFAULT_MESSAGE,
+	bridgeError,
+} from './errors';

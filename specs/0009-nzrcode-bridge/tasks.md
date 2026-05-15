@@ -102,7 +102,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T005 add method and event registries with typed payloads`.
 
 ### T006 — Protocol: Error codes
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T004
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/protocol/errors.ts`
