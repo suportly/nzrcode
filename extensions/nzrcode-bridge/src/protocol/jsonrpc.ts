@@ -85,6 +85,68 @@ function validateErrorShape(error: unknown): error is JsonRpcError {
 	return typeof e['code'] === 'number' && typeof e['message'] === 'string';
 }
 
+// ─── parseMessage helpers ────────────────────────────────────────────────────
+
+function parseResponse(obj: RawObject): JsonRpcResponse {
+	const hasResult = 'result' in obj;
+	const hasError = 'error' in obj;
+
+	if (hasResult && hasError) {
+		throw new ParseError('A response must not contain both "result" and "error"');
+	}
+
+	const id = obj['id'];
+	if (id !== null && !validateId(id)) {
+		throw new ParseError(`Response id must be a string, number, or null`);
+	}
+
+	if (hasError) {
+		if (!validateErrorShape(obj['error'])) {
+			throw new ParseError('"error" field must have numeric "code" and string "message"');
+		}
+		const response: JsonRpcErrorResponse = {
+			jsonrpc: JSONRPC_VERSION,
+			id: (id as JsonRpcId | null) ?? null,
+			error: obj['error'] as JsonRpcError,
+		};
+		return response;
+	}
+
+	const response: JsonRpcSuccessResponse = {
+		jsonrpc: JSONRPC_VERSION,
+		id: id as JsonRpcId,
+		result: obj['result'],
+	};
+	return response;
+}
+
+function parseRequestOrNotification(obj: RawObject): JsonRpcRequest | JsonRpcNotification {
+	if (typeof obj['method'] !== 'string') {
+		throw new ParseError('Message must have a string "method" field or be a valid response');
+	}
+
+	if ('id' in obj) {
+		const id = obj['id'];
+		if (!validateId(id)) {
+			throw new ParseError(`Request id must be a string or number`);
+		}
+		const request: JsonRpcRequest = {
+			jsonrpc: JSONRPC_VERSION,
+			id: id,
+			method: obj['method'],
+			...(obj['params'] !== undefined ? { params: obj['params'] } : {}),
+		};
+		return request;
+	}
+
+	const notification: JsonRpcNotification = {
+		jsonrpc: JSONRPC_VERSION,
+		method: obj['method'],
+		...(obj['params'] !== undefined ? { params: obj['params'] } : {}),
+	};
+	return notification;
+}
+
 // ─── parseMessage ────────────────────────────────────────────────────────────
 
 export function parseMessage(raw: string): JsonRpcMessage {
@@ -102,66 +164,11 @@ export function parseMessage(raw: string): JsonRpcMessage {
 	assertObject(parsed, 'message');
 	validateVersion(parsed);
 
-	const hasId = 'id' in parsed;
-	const hasMethod = 'method' in parsed;
-	const hasResult = 'result' in parsed;
-	const hasError = 'error' in parsed;
-
-	if (hasResult && hasError) {
-		throw new ParseError('A response must not contain both "result" and "error"');
+	if ('result' in parsed || 'error' in parsed) {
+		return parseResponse(parsed);
 	}
 
-	if (hasResult || hasError) {
-		// Response: must have id (possibly null for error responses per spec)
-		const id = parsed['id'];
-		if (id !== null && !validateId(id)) {
-			throw new ParseError(`Response id must be a string, number, or null`);
-		}
-
-		if (hasError) {
-			if (!validateErrorShape(parsed['error'])) {
-				throw new ParseError('"error" field must have numeric "code" and string "message"');
-			}
-			const response: JsonRpcErrorResponse = {
-				jsonrpc: JSONRPC_VERSION,
-				id: (id as JsonRpcId | null) ?? null,
-				error: parsed['error'] as JsonRpcError,
-			};
-			return response;
-		}
-
-		const response: JsonRpcSuccessResponse = {
-			jsonrpc: JSONRPC_VERSION,
-			id: id as JsonRpcId,
-			result: parsed['result'],
-		};
-		return response;
-	}
-
-	if (!hasMethod || typeof parsed['method'] !== 'string') {
-		throw new ParseError('Message must have a string "method" field or be a valid response');
-	}
-
-	if (hasId) {
-		const id = parsed['id'];
-		if (!validateId(id)) {
-			throw new ParseError(`Request id must be a string or number`);
-		}
-		const request: JsonRpcRequest = {
-			jsonrpc: JSONRPC_VERSION,
-			id: id,
-			method: parsed['method'],
-			...(parsed['params'] !== undefined ? { params: parsed['params'] } : {}),
-		};
-		return request;
-	}
-
-	const notification: JsonRpcNotification = {
-		jsonrpc: JSONRPC_VERSION,
-		method: parsed['method'],
-		...(parsed['params'] !== undefined ? { params: parsed['params'] } : {}),
-	};
-	return notification;
+	return parseRequestOrNotification(parsed);
 }
 
 // ─── Serializers ─────────────────────────────────────────────────────────────

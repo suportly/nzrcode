@@ -40,10 +40,13 @@
   },
   "scripts": {
     "compile": "gulp compile-extension:nzrcode-bridge",
-    "watch": "gulp watch-extension:nzrcode-bridge"
+    "watch": "gulp watch-extension:nzrcode-bridge",
+    "test": "node ../../node_modules/mocha/bin/mocha"
   },
   "devDependencies": {
-    "@types/node": "22.x"
+    "@types/mocha": "^10.0.6",
+    "@types/node": "22.x",
+    "tsx": "^4.22.0"
   },
   "prettier": {
     "printWidth": 100,

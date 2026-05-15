@@ -72,7 +72,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
 - **Notes:** Não inventar o nome do campo em product.json — ler primeiro.
 
 ### T004 — Protocol: JSON-RPC envelope types + framing
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/protocol/jsonrpc.ts`

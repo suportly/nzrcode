@@ -109,6 +109,25 @@ suite('JsonRpc parseMessage', () => {
 		});
 		assert.throws(() => parseMessage(raw), ParseError);
 	});
+
+	// ── Error response shape validation ───────────────────────────────────
+	test('throws ParseError when error response has non-numeric code', () => {
+		const raw = JSON.stringify({ jsonrpc: '2.0', id: 1, error: { code: '-32600', message: 'Invalid Request' } });
+
+		assert.throws(() => parseMessage(raw), ParseError);
+	});
+
+	test('throws ParseError when error response has non-string message', () => {
+		const raw = JSON.stringify({ jsonrpc: '2.0', id: 1, error: { code: -32600, message: 42 } });
+
+		assert.throws(() => parseMessage(raw), ParseError);
+	});
+
+	test('throws ParseError when error response has boolean id', () => {
+		const raw = JSON.stringify({ jsonrpc: '2.0', id: true, error: { code: -32600, message: 'Invalid Request' } });
+
+		assert.throws(() => parseMessage(raw), ParseError);
+	});
 });
 
 suite('JsonRpc serializers round-trip', () => {
