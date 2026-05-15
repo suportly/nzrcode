@@ -468,4 +468,7 @@ import './contrib/opener/browser/opener.contribution.js';
 // NZRCode — Mission Control toggle command + context key
 import './contrib/nzr/browser/missionControl.contribution.js';
 
+// NZRCode — Mission Control ViewContainer + Stations view
+import './contrib/nzr/browser/stationView.contribution.js';
+
 //#endregion

@@ -1,0 +1,9 @@
+----- test_files_exist.sh -----
+test_files_exist: OK
+----- test_view_registered.sh -----
+test_view_registered: OK
+----- test_no_new_deps.sh -----
+test_no_new_deps: OK
+----- test_i18n_strings.sh -----
+test_i18n_strings: OK
+===== run_all: OK =====

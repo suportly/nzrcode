@@ -10,7 +10,7 @@
 ## Task list
 
 ### T001 — Smoke + mocha stubs (RED)
-- **Status:** pending
+- **Status:** done
 - **Depends on:** —
 - **Files:**
   - create: `test/nzrcode-station-view/{test_files_exist,test_view_registered,test_no_new_deps,test_i18n_strings,run_all}.sh`
@@ -26,7 +26,7 @@
   - [ ] Commit: `test(nzr-sv): T001 add Station View smoke suite + mocha stubs (RED)`.
 
 ### T002 — `stationCard` pure builder + tests
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - create: `src/vs/workbench/contrib/nzr/browser/stationCard.ts`
@@ -41,7 +41,7 @@
   - [ ] Commit: `feat(nzr-sv): T002 add stationCard pure DOM builder`.
 
 ### T003 — `pipelineRail` pure builder + stage label table + tests
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - create: `src/vs/workbench/contrib/nzr/browser/pipelineRail.ts`
@@ -57,7 +57,7 @@
   - [ ] Commit: `feat(nzr-sv): T003 add pipelineRail pure builder + stage labels`.
 
 ### T004 — `StationViewPane` class
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T003
 - **Files:**
   - create: `src/vs/workbench/contrib/nzr/browser/stationView.ts`
@@ -73,7 +73,7 @@
   - [ ] Commit: `feat(nzr-sv): T004 implement StationViewPane`.
 
 ### T005 — ViewContainer + View registration
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T004
 - **Files:**
   - create: `src/vs/workbench/contrib/nzr/browser/stationView.contribution.ts`
@@ -88,7 +88,7 @@
   - [ ] Commit: `feat(nzr-sv): T005 register Mission Control ViewContainer + Station view`.
 
 ### T006 — Wire workbench main + final sanity
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T005
 - **Files:**
   - modify: `src/vs/workbench/workbench.common.main.ts`
@@ -98,7 +98,7 @@
   - [ ] Commit: `feat(nzr-sv): T006 register stationView contribution in workbench main`.
 
 ### T007 — Verify + push + PR #7
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T006
 - **Files:**
   - create: `specs/0007-station-view/evidence/run_all_output.txt`
