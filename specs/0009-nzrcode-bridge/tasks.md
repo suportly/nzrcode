@@ -189,7 +189,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
 ### Phase 3 — WebSocket server + dispatcher
 
 ### T012 — `wsServer.ts` bind 127.0.0.1 dynamic port
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T010
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/server/wsServer.ts`
