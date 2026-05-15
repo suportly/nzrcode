@@ -146,7 +146,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T008 add token gen and constant-time validation`.
 
 ### T009 — `logging.ts` redacting tokens e content
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/logging.ts`
