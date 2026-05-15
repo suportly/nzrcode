@@ -173,7 +173,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T010 load or create bridge state with 0600 perms`.
 
 ### T011 — `pairedDevices.ts` (SecretStorage + globalState)
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T010
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/pairing/pairedDevices.ts`
