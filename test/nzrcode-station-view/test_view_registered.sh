@@ -18,7 +18,11 @@ fail=0
 grep -q "registerViewContainer" "$CONTRIB" || { echo "missing registerViewContainer"; fail=1; }
 grep -q "registerViews" "$CONTRIB" || { echo "missing registerViews"; fail=1; }
 grep -q "workbench.view.nzr.missionControl" "$CONTRIB" || { echo "missing container id workbench.view.nzr.missionControl"; fail=1; }
-grep -q "workbench.view.nzr.stations" "$CONTRIB" || { echo "missing view id workbench.view.nzr.stations"; fail=1; }
+# View id can live on the pane class as static ID; accept the literal in either file.
+if ! grep -qE "workbench\.view\.nzr\.stations" "$CONTRIB" "$PANE" 2>/dev/null; then
+  echo "missing view id workbench.view.nzr.stations (checked contribution + pane)"
+  fail=1
+fi
 grep -q "StationViewPane" "$CONTRIB" || { echo "missing StationViewPane reference in contribution"; fail=1; }
 grep -q "ViewContainerLocation.Sidebar" "$CONTRIB" || { echo "expected ViewContainerLocation.Sidebar"; fail=1; }
 grep -q "import './media/stationView.css';" "$CONTRIB" || { echo "missing CSS import"; fail=1; }
