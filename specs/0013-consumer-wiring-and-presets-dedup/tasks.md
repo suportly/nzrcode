@@ -10,7 +10,7 @@
 ## Task list
 
 ### T001 — Smoke + mocha stubs (RED)
-- **Status:** pending
+- **Status:** done
 - **Files:**
   - create: `test/nzrcode-consumer-wiring/{test_files_exist,test_presets_deduped,test_addstation_uses_settings,test_welcome_uses_settings,test_no_new_deps,test_i18n_strings,run_all}.sh`
   - create: `test/nzrcode-consumer-wiring/README.md`
@@ -27,7 +27,7 @@
   - [ ] Commit: `test(nzr-wiring): T001 add consumer-wiring smoke suite + mocha stubs (RED)`.
 
 ### T002 — PRESETS dedup
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - modify: `src/vs/workbench/contrib/nzr/browser/stationPaletteFlow.ts`
@@ -39,7 +39,7 @@
   - [ ] Commit: `refactor(nzr): T002 dedup PRESETS into nzrPipelineSettings (decision-0012-1)`.
 
 ### T003 — Wire AddStationAction to settings
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - create: `src/vs/workbench/contrib/nzr/browser/nzrPaletteDefaults.ts`
@@ -54,7 +54,7 @@
   - [ ] Commit: `feat(nzr-palette): T003 read defaultPreset/defaultBranch from settings`.
 
 ### T004 — Wire WelcomeNotification to settings
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T003
 - **Files:**
   - create: `src/vs/workbench/contrib/nzr/browser/nzrWelcomeGate.ts`
@@ -70,7 +70,7 @@
   - [ ] Commit: `feat(nzr-welcome): T004 short-circuit auto-show when setting is disabled`.
 
 ### T005 — Verify + push + PR
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T004
 - **Files:**
   - create: `specs/0013-consumer-wiring-and-presets-dedup/evidence/run_all_output.txt`
