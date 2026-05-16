@@ -99,7 +99,7 @@ suite('pairing/revokeCommand', () => {
 
     interface RevokeRecorder {
         droppedConnections: number;
-        rotations: number;
+        removedTokens: string[];
         order: string[];
     }
 
@@ -107,6 +107,7 @@ suite('pairing/revokeCommand', () => {
         devices?: readonly PairedDevice[];
         pickedDeviceId?: string;
         confirmRevoke?: boolean;
+        remainingAfterRevoke?: number;
     }): {
         deps: RevokeIpadDeps;
         revoked: string[];
@@ -114,7 +115,7 @@ suite('pairing/revokeCommand', () => {
         infoMessages: string[];
     } {
         const revoked: string[] = [];
-        const recorder: RevokeRecorder = { droppedConnections: 0, rotations: 0, order: [] };
+        const recorder: RevokeRecorder = { droppedConnections: 0, removedTokens: [], order: [] };
         const infoMessages: string[] = [];
 
         const deps: RevokeIpadDeps = {
@@ -132,10 +133,11 @@ suite('pairing/revokeCommand', () => {
                 recorder.droppedConnections += 1;
                 recorder.order.push('dropActiveConnections');
             },
-            rotateToken: async () => {
-                recorder.rotations += 1;
-                recorder.order.push('rotateToken');
+            removeDeviceToken: async (deviceId) => {
+                recorder.removedTokens.push(deviceId);
+                recorder.order.push('removeDeviceToken');
             },
+            remainingDevicesCount: () => opts.remainingAfterRevoke ?? 0,
             showInformationMessage: (msg) => {
                 infoMessages.push(msg);
                 recorder.order.push('showInformationMessage');
@@ -153,33 +155,62 @@ suite('pairing/revokeCommand', () => {
 
         assert.equal(revoked.length, 0);
         assert.equal(recorder.droppedConnections, 0);
-        assert.equal(recorder.rotations, 0, 'no rotation when there is nothing to revoke');
+        assert.equal(recorder.removedTokens.length, 0, 'no token removal when there is nothing to revoke');
         assert.equal(infoMessages.length, 1);
         assert.match(infoMessages[0], /no.*device/i);
     });
 
-    test('revokes the selected device, drops connections, and rotates the token in that order', async () => {
+    test('orchestration order: revokeDevice → dropActiveConnections → removeDeviceToken → showInformationMessage', async () => {
         const { deps, revoked, recorder, infoMessages } = makeDeps({
             devices: [device('d-1', 'Alair iPad', Date.now())],
             pickedDeviceId: 'd-1',
             confirmRevoke: true,
+            remainingAfterRevoke: 0,
         });
 
         await runRevokeIpadCommand(deps);
 
         assert.deepEqual(revoked, ['d-1']);
         assert.equal(recorder.droppedConnections, 1);
-        assert.equal(recorder.rotations, 1, 'rotateToken must run once after a successful revoke');
+        assert.deepEqual(recorder.removedTokens, ['d-1'], 'removeDeviceToken must run with the revoked deviceId');
         assert.deepEqual(
             recorder.order,
-            ['revokeDevice', 'dropActiveConnections', 'rotateToken', 'showInformationMessage'],
-            'orchestration order must stay revoke → drop → rotate → notify',
+            ['revokeDevice', 'dropActiveConnections', 'removeDeviceToken', 'showInformationMessage'],
         );
         assert.match(infoMessages.at(-1) ?? '', /revoked/i);
-        assert.match(infoMessages.at(-1) ?? '', /re-?pair/i);
     });
 
-    test('does NOT revoke or rotate when the user cancels the QuickPick', async () => {
+    test('success message branches on remainingDevicesCount = 0', async () => {
+        const { deps, infoMessages } = makeDeps({
+            devices: [device('d-1', 'Alair iPad', Date.now())],
+            pickedDeviceId: 'd-1',
+            remainingAfterRevoke: 0,
+        });
+        await runRevokeIpadCommand(deps);
+        assert.match(infoMessages.at(-1) ?? '', /No other paired devices/i);
+    });
+
+    test('success message branches on remainingDevicesCount = 1', async () => {
+        const { deps, infoMessages } = makeDeps({
+            devices: [device('d-1', 'Alair iPad', Date.now())],
+            pickedDeviceId: 'd-1',
+            remainingAfterRevoke: 1,
+        });
+        await runRevokeIpadCommand(deps);
+        assert.match(infoMessages.at(-1) ?? '', /1 other paired device stays connected/i);
+    });
+
+    test('success message branches on remainingDevicesCount > 1', async () => {
+        const { deps, infoMessages } = makeDeps({
+            devices: [device('d-1', 'Alair iPad', Date.now())],
+            pickedDeviceId: 'd-1',
+            remainingAfterRevoke: 4,
+        });
+        await runRevokeIpadCommand(deps);
+        assert.match(infoMessages.at(-1) ?? '', /4 other paired devices stay connected/i);
+    });
+
+    test('does NOT revoke or remove the token when the user cancels the QuickPick', async () => {
         const { deps, revoked, recorder } = makeDeps({
             devices: [device('d-1', 'Alair iPad', Date.now())],
             pickedDeviceId: undefined,
@@ -189,10 +220,10 @@ suite('pairing/revokeCommand', () => {
 
         assert.equal(revoked.length, 0);
         assert.equal(recorder.droppedConnections, 0);
-        assert.equal(recorder.rotations, 0, 'no rotation when the user backs out');
+        assert.equal(recorder.removedTokens.length, 0);
     });
 
-    test('does NOT revoke or rotate when the user declines the confirmation prompt', async () => {
+    test('does NOT revoke or remove the token when the user declines the confirmation prompt', async () => {
         const { deps, revoked, recorder } = makeDeps({
             devices: [device('d-1', 'Alair iPad', Date.now())],
             pickedDeviceId: 'd-1',
@@ -203,6 +234,6 @@ suite('pairing/revokeCommand', () => {
 
         assert.equal(revoked.length, 0);
         assert.equal(recorder.droppedConnections, 0);
-        assert.equal(recorder.rotations, 0, 'no rotation when the user declines the confirm prompt');
+        assert.equal(recorder.removedTokens.length, 0);
     });
 });

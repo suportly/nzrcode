@@ -3,15 +3,19 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-// Persistent bridge state: load/create/save/delete ~/.nzrcode/bridge.json.
-// The file is the authoritative source of truth; the module-level cache is a
-// convenience for in-process consumers. The auth token is NEVER logged — pass
-// it through redactToken from logging.ts if you must surface it in a message.
+// Persistent bridge state: load/migrate/save/delete ~/.nzrcode/bridge.json.
+// Schema v2 (feature 0018) replaces the single shared token from v1 with a
+// `tokens: Record<deviceId, string>` map so revoke can target one device
+// without forcing every other paired client to re-pair. v1 files are
+// migrated by dropping the shared token (paired devices must re-pair).
+//
+// The file is the authoritative source of truth; the module-level cache is
+// a convenience for in-process consumers. Tokens are never logged — pass
+// them through redactToken from logging.ts if you must surface one.
 
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
-import { generateToken } from './auth';
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -26,19 +30,23 @@ const STATE_DIR = '.nzrcode';
 /** File name inside STATE_DIR. */
 const STATE_FILE = 'bridge.json';
 
+/** Current schema version. v1 files are migrated on load. */
+const CURRENT_VERSION = 2 as const;
+
 // ---------------------------------------------------------------------------
 // Public types
 // ---------------------------------------------------------------------------
 
 /**
  * On-disk shape of the bridge state file (~/.nzrcode/bridge.json, perm 0600).
- * Token is regenerated only on `nzrcode: Revoke iPad` or if the file is
- * manually deleted (cl-2: no auto-rotation in MVP).
+ * v2 maps each paired deviceId to its own 32-byte base64url token. Empty
+ * map means no devices are paired; the bridge accepts new pair attempts
+ * via the in-memory pending-pair slot owned by `startPairableBridge`.
  */
 export interface BridgeState {
-	readonly token: string;
+	readonly tokens: Readonly<Record<string, string>>;
 	readonly lastPort?: number;
-	readonly version: 1;
+	readonly version: 2;
 }
 
 /** Thrown on validation failures (bad JSON, wrong version, bad token). */
@@ -81,26 +89,29 @@ export function stateFilePath(): string {
 // Validation helpers
 // ---------------------------------------------------------------------------
 
-function assertValidToken(token: unknown): asserts token is string {
+function assertValidToken(token: unknown, label: string): asserts token is string {
 	if (typeof token !== 'string' || !TOKEN_RE.test(token)) {
 		throw new BridgeStateError(
-			`Bridge state token is invalid: expected 43-char base64url string`,
+			`Bridge state token (${label}) is invalid: expected 43-char base64url string`,
 		);
 	}
 }
 
-function assertVersion1(version: unknown): asserts version is 1 {
-	if (version !== 1) {
-		throw new BridgeStateError(
-			`Bridge state version is unsupported: expected 1, got ${JSON.stringify(version)}`,
-		);
+function assertValidTokens(value: unknown): asserts value is Record<string, string> {
+	if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+		throw new BridgeStateError(`Bridge state tokens must be an object`);
+	}
+	for (const [deviceId, token] of Object.entries(value as Record<string, unknown>)) {
+		if (typeof deviceId !== 'string' || deviceId.length === 0) {
+			throw new BridgeStateError(`Bridge state tokens has an invalid deviceId key`);
+		}
+		assertValidToken(token, deviceId);
 	}
 }
 
 /**
  * Validates `lastPort` if present. Accepts undefined (field is optional);
- * otherwise must be an integer in the TCP user range. Mirrors the port
- * validation in protocol/qr.ts so the two contracts can't drift.
+ * otherwise must be an integer in the TCP user range.
  */
 function assertValidLastPort(value: unknown): asserts value is number | undefined {
 	if (value === undefined) {
@@ -118,8 +129,9 @@ function assertValidLastPort(value: unknown): asserts value is number | undefine
 // ---------------------------------------------------------------------------
 
 /**
- * Parse and validate a JSON string into a BridgeState.
- * Throws BridgeStateError on invalid JSON, wrong version, bad token, or bad port.
+ * Parse and validate a JSON string into a BridgeState. Accepts v1 inputs by
+ * migrating them (drops the shared token, bumps version to 2). Throws
+ * BridgeStateError on invalid JSON, unknown version, or bad port.
  */
 function parseState(raw: string): BridgeState {
 	let parsed: unknown;
@@ -134,27 +146,40 @@ function parseState(raw: string): BridgeState {
 	}
 
 	const obj = parsed as Record<string, unknown>;
-	assertVersion1(obj['version']);
-	assertValidToken(obj['token']);
+	const version = obj['version'];
 	assertValidLastPort(obj['lastPort']);
 
+	if (version === 1) {
+		// Migration: v1 had a single shared token. Drop it; every paired
+		// device under v1 must re-pair. lastPort survives.
+		return {
+			tokens: {},
+			version: CURRENT_VERSION,
+			...(obj['lastPort'] !== undefined ? { lastPort: obj['lastPort'] as number } : {}),
+		};
+	}
+
+	if (version !== CURRENT_VERSION) {
+		throw new BridgeStateError(
+			`Bridge state version is unsupported: expected 1 or 2, got ${JSON.stringify(version)}`,
+		);
+	}
+
+	assertValidTokens(obj['tokens']);
+
 	return {
-		token: obj['token'] as string,
-		version: 1,
+		tokens: { ...(obj['tokens'] as Record<string, string>) },
+		version: CURRENT_VERSION,
 		...(obj['lastPort'] !== undefined ? { lastPort: obj['lastPort'] as number } : {}),
 	};
 }
 
 /**
  * Load existing state from ~/.nzrcode/bridge.json, or create a fresh one
- * with a freshly generated token. The file is always rewritten with
- * permission 0600 after this call returns — even if the prior file had
- * looser permissions (e.g. 0644 from a previous bug).
- *
- * Honors NZRCODE_HOME env override for testing; default is os.homedir().
- *
- * Returns the in-memory state. Throws BridgeStateError if the file exists
- * with bad JSON or with version != 1 — caller decides whether to delete and retry.
+ * with an empty tokens map. The file is always rewritten with permission
+ * 0600 after this call returns — even if the prior file had looser
+ * permissions. v1 files are silently migrated to v2 (paired devices must
+ * re-pair).
  */
 export function loadOrCreateState(): BridgeState {
 	const filePath = stateFilePath();
@@ -163,7 +188,7 @@ export function loadOrCreateState(): BridgeState {
 	fs.mkdirSync(dir, { recursive: true, mode: 0o700 });
 
 	if (!fs.existsSync(filePath)) {
-		const fresh: BridgeState = { token: generateToken(), version: 1 };
+		const fresh: BridgeState = { tokens: {}, version: CURRENT_VERSION };
 		writeAtomic(filePath, fresh);
 		_cached = fresh;
 		return fresh;
@@ -171,6 +196,11 @@ export function loadOrCreateState(): BridgeState {
 
 	const raw = fs.readFileSync(filePath, 'utf-8');
 	const state = parseState(raw);
+
+	// If we migrated, rewrite the file in the new shape.
+	if (raw.includes('"version": 1')) {
+		writeAtomic(filePath, state);
+	}
 
 	// Always re-apply 0600 to fix any permission drift.
 	fs.chmodSync(filePath, 0o600);
@@ -180,12 +210,14 @@ export function loadOrCreateState(): BridgeState {
 }
 
 /**
- * Persist a mutated state (e.g. lastPort just changed). Writes atomically
- * via tmp-rename. Permission is always 0600.
+ * Persist a mutated state. Writes atomically via tmp-rename. Permission
+ * is always 0600.
  */
 export function saveState(state: BridgeState): void {
-	assertVersion1(state.version);
-	assertValidToken(state.token);
+	if (state.version !== CURRENT_VERSION) {
+		throw new BridgeStateError(`saveState: unsupported version ${state.version}`);
+	}
+	assertValidTokens(state.tokens);
 	assertValidLastPort(state.lastPort);
 
 	const filePath = stateFilePath();
@@ -197,8 +229,7 @@ export function saveState(state: BridgeState): void {
 }
 
 /**
- * Delete the state file (used by `nzrcode: Revoke iPad` after revoking
- * paired devices). No-op if the file doesn't exist.
+ * Delete the state file. No-op if the file doesn't exist.
  */
 export function deleteState(): void {
 	const filePath = stateFilePath();
@@ -206,25 +237,51 @@ export function deleteState(): void {
 	_cached = undefined;
 }
 
+// ---------------------------------------------------------------------------
+// Per-device token helpers
+// ---------------------------------------------------------------------------
+
 /**
- * Rotate the bridge auth token. Generates a fresh 32-byte base64url
- * token, preserves `lastPort` from the current state, and persists via
- * `saveState`. Called after `nzrcode: Revoke iPad` to invalidate any
- * copy of the previous token that the revoked device (or anyone else)
- * may have retained.
- *
- * If no state has been loaded yet in this process, `loadOrCreateState`
- * runs first so the call is total.
+ * Insert or replace the token for `deviceId`. Persists immediately. If
+ * no state has been loaded in this process, runs `loadOrCreateState`
+ * first so the call is total.
  */
-export function rotateToken(): BridgeState {
+export function addToken(deviceId: string, token: string): void {
+	if (typeof deviceId !== 'string' || deviceId.length === 0) {
+		throw new BridgeStateError(`addToken: deviceId must be a non-empty string`);
+	}
+	assertValidToken(token, deviceId);
+
 	const previous = _cached ?? loadOrCreateState();
 	const next: BridgeState = {
-		token: generateToken(),
-		version: 1,
-		...(previous.lastPort !== undefined ? { lastPort: previous.lastPort } : {}),
+		...previous,
+		tokens: { ...previous.tokens, [deviceId]: token },
 	};
 	saveState(next);
-	return next;
+}
+
+/**
+ * Remove the token for `deviceId`. Returns true if an entry existed,
+ * false otherwise (no-op in the false case).
+ */
+export function removeToken(deviceId: string): boolean {
+	const previous = _cached ?? loadOrCreateState();
+	if (!(deviceId in previous.tokens)) {
+		return false;
+	}
+	const nextTokens = { ...previous.tokens };
+	delete nextTokens[deviceId];
+	saveState({ ...previous, tokens: nextTokens });
+	return true;
+}
+
+/**
+ * Return a defensive snapshot of the current tokens map. Mutating the
+ * return value never affects on-disk state.
+ */
+export function getTokens(): Readonly<Record<string, string>> {
+	const current = _cached ?? loadOrCreateState();
+	return Object.freeze({ ...current.tokens });
 }
 
 // ---------------------------------------------------------------------------

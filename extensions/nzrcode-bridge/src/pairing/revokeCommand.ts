@@ -3,16 +3,12 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-// `nzrcode-bridge.revokeIpad` command.
-// Walks the user through revoking a paired device, tears down the live
-// WS connections, and rotates the shared bridge token so any leaked
-// copy of the previous token (in the revoked device's keychain, a
-// screenshot of the QR, etc.) can no longer authenticate.
+// `nzrcode-bridge.revokeIpad` command (feature 0018 — per-device tokens).
 //
-// Per-device tokens (so revoke removes only one device's token, leaving
-// the others paired) are tracked as decision-0015-1 in the feature 0015
-// spec — that refactor needs a `bridge.json` schema bump and is out of
-// scope here.
+// Walks the user through revoking a paired device, tears down the live WS
+// connections, and deletes the per-device token entry from `state.tokens`.
+// Other paired devices keep their own tokens — they continue to authenticate
+// successfully after the next reconnect.
 
 import type { PairedDevice } from './pairedDevices';
 import { humaniseLastSeen } from './listCommand';
@@ -29,9 +25,20 @@ export interface RevokeIpadDeps {
     readonly confirmRevoke: (deviceName: string) => Promise<boolean>;
     readonly revokeDevice: (deviceId: string) => Promise<void>;
     readonly dropActiveConnections: () => Promise<void>;
-    readonly rotateToken: () => Promise<void>;
+    readonly removeDeviceToken: (deviceId: string) => Promise<void>;
+    readonly remainingDevicesCount: () => number;
     readonly showInformationMessage: (message: string) => void;
     readonly now: () => number;
+}
+
+function buildSuccessMessage(deviceName: string, remaining: number): string {
+    if (remaining === 0) {
+        return `Revoked ${deviceName}. No other paired devices.`;
+    }
+    if (remaining === 1) {
+        return `Revoked ${deviceName}. 1 other paired device stays connected.`;
+    }
+    return `Revoked ${deviceName}. ${remaining} other paired devices stay connected.`;
 }
 
 export async function runRevokeIpadCommand(deps: RevokeIpadDeps): Promise<void> {
@@ -56,6 +63,6 @@ export async function runRevokeIpadCommand(deps: RevokeIpadDeps): Promise<void> 
 
     await deps.revokeDevice(picked.deviceId);
     await deps.dropActiveConnections();
-    await deps.rotateToken();
-    deps.showInformationMessage(`Revoked ${picked.label}. Token rotated — other paired devices must re-pair.`);
+    await deps.removeDeviceToken(picked.deviceId);
+    deps.showInformationMessage(buildSuccessMessage(picked.label, deps.remainingDevicesCount()));
 }

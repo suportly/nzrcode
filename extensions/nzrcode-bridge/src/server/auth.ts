@@ -29,6 +29,41 @@ export function generateToken(): string {
 }
 
 /**
+ * Result of a token lookup. A `deviceId` result means the candidate
+ * matched a persistent entry in the per-device tokens map. A `pending`
+ * result means it matched the in-memory pair-time slot (the device has
+ * authenticated but has not yet called `system.register`).
+ */
+export type TokenLookupResult =
+	| { readonly deviceId: string }
+	| { readonly pending: true };
+
+/**
+ * Linear scan over the per-device tokens map (and the optional pending
+ * pair-time slot) for a candidate token. Each comparison uses the
+ * timing-safe `validateToken` so we don't leak which entry matched.
+ *
+ * Returns `undefined` if no entry matches. If both the persistent map
+ * AND the pending slot would match the candidate, the persistent entry
+ * wins (the device is already paired; pending is for unknown devices).
+ */
+export function findTokenMatch(
+	tokens: Readonly<Record<string, string>>,
+	pendingPairToken: string | undefined,
+	candidate: string,
+): TokenLookupResult | undefined {
+	for (const [deviceId, stored] of Object.entries(tokens)) {
+		if (validateToken(stored, candidate)) {
+			return { deviceId };
+		}
+	}
+	if (pendingPairToken !== undefined && validateToken(pendingPairToken, candidate)) {
+		return { pending: true };
+	}
+	return undefined;
+}
+
+/**
  * Constant-time comparison of a stored token against a candidate string.
  * Returns true only on exact match. Returns false (no throw) for malformed
  * inputs: wrong length, invalid base64url chars, decode failure.

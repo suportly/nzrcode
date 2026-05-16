@@ -14,7 +14,7 @@ require_file() {
 
 require_file 'extensions/nzrcode-bridge/src/server/state.ts'
 require_file 'extensions/nzrcode-bridge/src/pairing/revokeCommand.ts'
-require_file 'extensions/nzrcode-bridge/src/test/unit/rotateToken.test.ts'
+require_file 'extensions/nzrcode-bridge/src/test/unit/perDeviceTokens.test.ts'
 require_file 'extensions/nzrcode-bridge/src/test/unit/listRevokeCommand.test.ts'
 
 if [ "$fail" -eq 0 ]; then

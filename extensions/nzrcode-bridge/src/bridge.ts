@@ -13,11 +13,13 @@ import { startBridgeWsServer } from './server/wsServer';
 import type { BridgeWsServer } from './server/wsServer';
 import { Dispatcher } from './server/dispatcher';
 import type { Logger } from './server/dispatcher';
-import { loadOrCreateState, saveState, stateFilePath } from './server/state';
+import { findTokenMatch } from './server/auth';
+import { addToken, getTokens, loadOrCreateState, saveState, stateFilePath } from './server/state';
 import { CANONICAL_BRIDGE_NAMESPACES, registerSystemHandlers } from './rpc/system';
 import { MethodName } from './protocol/methods';
 import { PairingController } from './pairing/pairingController';
 import type { BridgeRuntimeHandle } from './pairing/pairCommand';
+import { generateToken } from './server/auth';
 
 export interface BridgeStartDeps {
     readonly serverVersion: string;
@@ -43,7 +45,10 @@ export async function maybeStartBridge(deps: BridgeStartDeps): Promise<BridgeRun
 
     const state = loadOrCreateState();
 
-    const dispatcher = new Dispatcher({ token: state.token, logger: deps.logger });
+    const dispatcher = new Dispatcher({
+        lookupToken: candidate => findTokenMatch(getTokens(), undefined, candidate),
+        logger: deps.logger,
+    });
     registerSystemHandlers(dispatcher, {
         serverVersion: deps.serverVersion,
         capabilities: CANONICAL_BRIDGE_NAMESPACES,
@@ -71,16 +76,23 @@ export async function maybeStartBridge(deps: BridgeStartDeps): Promise<BridgeRun
  *
  * Lifecycle is owned by the caller: `dispose()` stops the WS server.
  */
-export async function startPairableBridge(deps: BridgeStartDeps): Promise<BridgeRuntimeHandle> {
+export async function startPairableBridge(deps: BridgeStartDeps): Promise<BridgeRuntimeHandle & { token: string }> {
     const state = loadOrCreateState();
 
-    const dispatcher = new Dispatcher({ token: state.token, logger: deps.logger });
+    const pendingPairToken = generateToken();
+
+    const dispatcher = new Dispatcher({
+        lookupToken: candidate => findTokenMatch(getTokens(), pendingPairToken, candidate),
+        logger: deps.logger,
+    });
     registerSystemHandlers(dispatcher, {
         serverVersion: deps.serverVersion,
         capabilities: CANONICAL_BRIDGE_NAMESPACES,
     });
 
-    const controller = new PairingController();
+    const controller = new PairingController({
+        onPair: (deviceId) => { addToken(deviceId, pendingPairToken); },
+    });
     dispatcher.register(MethodName.SystemRegister, controller.createHandler());
 
     const server = await startBridgeWsServer({
@@ -93,5 +105,6 @@ export async function startPairableBridge(deps: BridgeStartDeps): Promise<Bridge
         port: server.port,
         pairingSignal: controller.pairingSignal,
         dispose: () => server.stop(),
+        token: pendingPairToken,
     };
 }
