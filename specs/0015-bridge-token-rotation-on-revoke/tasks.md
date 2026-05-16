@@ -10,7 +10,7 @@
 ## Task list
 
 ### T001 — Smoke + mocha stubs (RED)
-- **Status:** pending
+- **Status:** done
 - **Files:**
   - create: `test/nzrcode-token-rotation/{test_files_exist,test_rotate_token_wired,test_no_new_deps,run_all}.sh`
   - create: `test/nzrcode-token-rotation/README.md`
@@ -23,7 +23,7 @@
   - [ ] Commit: `test(nzr-bridge): T001 add token-rotation smoke + mocha stubs (RED)`.
 
 ### T002 — `rotateToken()` in state.ts + tests
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - modify: `extensions/nzrcode-bridge/src/server/state.ts`
@@ -35,7 +35,7 @@
   - [ ] Commit: `feat(nzr-bridge): T002 add rotateToken() to bridge state`.
 
 ### T003 — Wire rotation into runRevokeIpadCommand + tests
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - modify: `extensions/nzrcode-bridge/src/pairing/revokeCommand.ts`
@@ -50,7 +50,7 @@
   - [ ] Commit: `feat(nzr-bridge): T003 rotate token on iPad revoke`.
 
 ### T004 — Verify + push + PR
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T003
 - **Files:**
   - create: `specs/0015-bridge-token-rotation-on-revoke/evidence/run_all_output.txt`
