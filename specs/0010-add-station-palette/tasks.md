@@ -10,7 +10,7 @@
 ## Task list
 
 ### T001 — Smoke + mocha stub (RED)
-- **Status:** pending
+- **Status:** done
 - **Files:**
   - create: `test/nzrcode-station-palette/{test_files_exist,test_commands_registered,test_keybinding,test_no_new_deps,test_i18n_strings,run_all}.sh`
   - create: `test/nzrcode-station-palette/README.md`
@@ -25,7 +25,7 @@
   - [ ] Commit: `test(nzr-palette): T001 add station-palette smoke suite + mocha stub (RED)`.
 
 ### T002 — `stationPaletteFlow.ts` (pure helpers) + tests
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - create: `src/vs/workbench/contrib/nzr/browser/stationPaletteFlow.ts`
@@ -41,7 +41,7 @@
   - [ ] Commit: `feat(nzr-palette): T002 add stationPaletteFlow pure helpers`.
 
 ### T003 — `stationPalette.contribution.ts` (3 Action2 + keybinding)
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - create: `src/vs/workbench/contrib/nzr/browser/stationPalette.contribution.ts`
@@ -57,7 +57,7 @@
   - [ ] Commit: `feat(nzr-palette): T003 add 3 station palette commands + ⌘⇧S keybinding`.
 
 ### T004 — Wire workbench main
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T003
 - **Files:**
   - modify: `src/vs/workbench/workbench.common.main.ts`
@@ -67,7 +67,7 @@
   - [ ] Commit: `feat(nzr-palette): T004 register stationPalette contribution in workbench main`.
 
 ### T005 — Verify + push + PR
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T004
 - **Files:**
   - create: `specs/0010-add-station-palette/evidence/run_all_output.txt`

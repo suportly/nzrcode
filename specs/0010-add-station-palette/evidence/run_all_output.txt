@@ -1,0 +1,16 @@
+=== test_files_exist.sh ===
+PASS: Station Palette feature files present
+
+=== test_commands_registered.sh ===
+PASS: Station Palette commands registered
+
+=== test_keybinding.sh ===
+PASS: Station Palette keybinding registered (⌘⇧S → nzr.station.add when nzr.missionControl.active)
+
+=== test_no_new_deps.sh ===
+test_no_new_deps: OK
+
+=== test_i18n_strings.sh ===
+PASS: Station Palette strings localized
+
+Summary: all Station Palette smoke tests passed
