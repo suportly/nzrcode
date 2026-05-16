@@ -15,6 +15,9 @@ import { Dispatcher } from './server/dispatcher';
 import type { Logger } from './server/dispatcher';
 import { loadOrCreateState, saveState, stateFilePath } from './server/state';
 import { CANONICAL_BRIDGE_NAMESPACES, registerSystemHandlers } from './rpc/system';
+import { MethodName } from './protocol/methods';
+import { PairingController } from './pairing/pairingController';
+import type { BridgeRuntimeHandle } from './pairing/pairCommand';
 
 export interface BridgeStartDeps {
     readonly serverVersion: string;
@@ -56,5 +59,39 @@ export async function maybeStartBridge(deps: BridgeStartDeps): Promise<BridgeRun
         server,
         dispatcher,
         stop: () => server.stop(),
+    };
+}
+
+/**
+ * Start the bridge for a fresh pair flow. Unlike `maybeStartBridge`, this
+ * always binds — the caller (the `Pair iPad` palette command) is the user
+ * opt-in signal. Returns a runtime handle whose `pairingSignal` resolves
+ * the first time the connecting client calls `system.register` after
+ * successful authentication.
+ *
+ * Lifecycle is owned by the caller: `dispose()` stops the WS server.
+ */
+export async function startPairableBridge(deps: BridgeStartDeps): Promise<BridgeRuntimeHandle> {
+    const state = loadOrCreateState();
+
+    const dispatcher = new Dispatcher({ token: state.token, logger: deps.logger });
+    registerSystemHandlers(dispatcher, {
+        serverVersion: deps.serverVersion,
+        capabilities: CANONICAL_BRIDGE_NAMESPACES,
+    });
+
+    const controller = new PairingController();
+    dispatcher.register(MethodName.SystemRegister, controller.createHandler());
+
+    const server = await startBridgeWsServer({
+        onConnection: conn => dispatcher.attach(conn),
+    });
+
+    saveState({ ...state, lastPort: server.port });
+
+    return {
+        port: server.port,
+        pairingSignal: controller.pairingSignal,
+        dispose: () => server.stop(),
     };
 }
