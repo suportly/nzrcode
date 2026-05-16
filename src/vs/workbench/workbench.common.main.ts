@@ -483,4 +483,7 @@ import './contrib/nzr/browser/welcome.contribution.js';
 // NZRCode — Settings (nzrcode.* configuration schema)
 import './contrib/nzr/browser/settings.contribution.js';
 
+// NZRCode — Mission Control auto-activate consumer (reads nzrcode.missionControl.autoActivate)
+import './contrib/nzr/browser/missionControlAutoActivate.contribution.js';
+
 //#endregion
