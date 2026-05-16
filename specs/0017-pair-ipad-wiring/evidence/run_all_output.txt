@@ -1,0 +1,13 @@
+=== test_files_exist.sh ===
+PASS: Pair Wiring feature files present
+
+=== test_protocol_extended.sh ===
+PASS: protocol extended with system.register
+
+=== test_pair_wired.sh ===
+PASS: pair palette command wired end-to-end
+
+=== test_no_new_deps.sh ===
+test_no_new_deps: OK
+
+Summary: all Pair Wiring smoke tests passed
