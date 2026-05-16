@@ -415,7 +415,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T027 add QR webview with structural payload assertion`.
 
 ### T028 — Comando `nzrcode: Pair iPad` orchestration
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T027, T011, T026
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/pairing/pairCommand.ts`
