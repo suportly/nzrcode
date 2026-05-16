@@ -1,0 +1,10 @@
+=== test_files_exist.sh ===
+PASS: Mission Control feature files present
+
+=== test_interface_shape.sh ===
+PASS: Mission Control interface shape
+
+=== test_command_registered.sh ===
+PASS: Mission Control toggle command and context key registered
+
+Summary: all Mission Control smoke tests passed
