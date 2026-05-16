@@ -518,7 +518,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
 ### Phase 7 — Integration + evidence
 
 ### T035 — End-to-end integration test
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T034
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/test/integration/e2e.test.ts`
