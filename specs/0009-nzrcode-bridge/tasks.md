@@ -460,7 +460,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T030 add IPushProvider interface and fake implementation`.
 
 ### T031 — `relayPushProvider.ts` (HTTPS POST com timeout)
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T030
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/push/relayPushProvider.ts`
