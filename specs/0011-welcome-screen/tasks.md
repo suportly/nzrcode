@@ -10,7 +10,7 @@
 ## Task list
 
 ### T001 — Smoke + mocha stub (RED)
-- **Status:** pending
+- **Status:** done
 - **Files:**
   - create: `test/nzrcode-welcome/{test_files_exist,test_contribution_registered,test_command_registered,test_no_new_deps,test_i18n_strings,run_all}.sh`
   - create: `test/nzrcode-welcome/README.md`
@@ -25,7 +25,7 @@
   - [ ] Commit: `test(nzr-welcome): T001 add welcome smoke suite + mocha stub (RED)`.
 
 ### T002 — `welcomeFlow.ts` (pure helpers) + tests
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - create: `src/vs/workbench/contrib/nzr/browser/welcomeFlow.ts`
@@ -40,7 +40,7 @@
   - [ ] Commit: `feat(nzr-welcome): T002 add welcomeFlow pure helpers`.
 
 ### T003 — `welcome.contribution.ts` (contribution + command)
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - create: `src/vs/workbench/contrib/nzr/browser/welcome.contribution.ts`
@@ -55,7 +55,7 @@
   - [ ] Commit: `feat(nzr-welcome): T003 add welcome contribution + nzr.welcome.show command`.
 
 ### T004 — Wire workbench main
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T003
 - **Files:**
   - modify: `src/vs/workbench/workbench.common.main.ts`
@@ -65,7 +65,7 @@
   - [ ] Commit: `feat(nzr-welcome): T004 register welcome contribution in workbench main`.
 
 ### T005 — Verify + push + PR
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T004
 - **Files:**
   - create: `specs/0011-welcome-screen/evidence/run_all_output.txt`
