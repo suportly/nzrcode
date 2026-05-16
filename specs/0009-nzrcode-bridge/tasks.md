@@ -486,7 +486,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T032 add in-band push provider for connected clients`.
 
 ### T033 — `pushDispatcher.ts` fallback chain
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T031, T032
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/push/pushDispatcher.ts`
