@@ -1,0 +1,10 @@
+=== test_files_exist.sh ===
+PASS: Token Rotation feature files present
+
+=== test_rotate_token_wired.sh ===
+PASS: rotateToken wired into state.ts + revokeCommand.ts
+
+=== test_no_new_deps.sh ===
+test_no_new_deps: OK
+
+Summary: all Token Rotation smoke tests passed
