@@ -1,0 +1,10 @@
+=== test_files_exist.sh ===
+PASS: Auto-Activate feature files present
+
+=== test_contribution_registered.sh ===
+PASS: Auto-Activate contribution registered
+
+=== test_no_new_deps.sh ===
+test_no_new_deps: OK
+
+Summary: all Auto-Activate smoke tests passed

@@ -10,7 +10,7 @@
 ## Task list
 
 ### T001 — Smoke + mocha stub (RED)
-- **Status:** pending
+- **Status:** done
 - **Files:**
   - create: `test/nzrcode-auto-activate/{test_files_exist,test_contribution_registered,test_no_new_deps,run_all}.sh`
   - create: `test/nzrcode-auto-activate/README.md`
@@ -23,7 +23,7 @@
   - [ ] Commit: `test(nzr-mc-auto): T001 add auto-activate smoke suite + mocha stub (RED)`.
 
 ### T002 — `missionControlAutoActivate.ts` (pure predicate) + tests
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - create: `src/vs/workbench/contrib/nzr/browser/missionControlAutoActivate.ts`
@@ -35,7 +35,7 @@
   - [ ] Commit: `feat(nzr-mc-auto): T002 add shouldAutoActivateMissionControl predicate`.
 
 ### T003 — Contribution + workbench wire-up
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - create: `src/vs/workbench/contrib/nzr/browser/missionControlAutoActivate.contribution.ts`
@@ -49,7 +49,7 @@
   - [ ] Commit: `feat(nzr-mc-auto): T003 wire auto-activate contribution into workbench main`.
 
 ### T004 — Verify + push + PR
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T003
 - **Files:**
   - create: `specs/0014-mission-control-auto-activate/evidence/run_all_output.txt`
