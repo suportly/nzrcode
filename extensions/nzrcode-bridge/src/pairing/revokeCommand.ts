@@ -4,16 +4,15 @@
  *--------------------------------------------------------------------------------------------*/
 
 // `nzrcode-bridge.revokeIpad` command.
-// Walks the user through revoking a paired device and tears down the live
-// WS connections so the revoked client can't keep streaming events.
+// Walks the user through revoking a paired device, tears down the live
+// WS connections, and rotates the shared bridge token so any leaked
+// copy of the previous token (in the revoked device's keychain, a
+// screenshot of the QR, etc.) can no longer authenticate.
 //
-// Spec contract (Story 5 cenário 3):
-//   - QuickPick lists active devices (deviceName + humanised lastSeen).
-//   - On selection + confirmation → pairedDevices.revoke(id).
-//   - Drop active WS connections in ≤ 2 s (callers wire that to wsServer.stopAll).
-//
-// The follow-up dispatcher work — making subsequent auth attempts from the
-// revoked device fail — needs per-device tokens; tracked separately.
+// Per-device tokens (so revoke removes only one device's token, leaving
+// the others paired) are tracked as decision-0015-1 in the feature 0015
+// spec — that refactor needs a `bridge.json` schema bump and is out of
+// scope here.
 
 import type { PairedDevice } from './pairedDevices';
 import { humaniseLastSeen } from './listCommand';
@@ -30,6 +29,7 @@ export interface RevokeIpadDeps {
     readonly confirmRevoke: (deviceName: string) => Promise<boolean>;
     readonly revokeDevice: (deviceId: string) => Promise<void>;
     readonly dropActiveConnections: () => Promise<void>;
+    readonly rotateToken: () => Promise<void>;
     readonly showInformationMessage: (message: string) => void;
     readonly now: () => number;
 }
@@ -56,5 +56,6 @@ export async function runRevokeIpadCommand(deps: RevokeIpadDeps): Promise<void> 
 
     await deps.revokeDevice(picked.deviceId);
     await deps.dropActiveConnections();
-    deps.showInformationMessage(`Revoked ${picked.label}.`);
+    await deps.rotateToken();
+    deps.showInformationMessage(`Revoked ${picked.label}. Token rotated — other paired devices must re-pair.`);
 }
