@@ -500,7 +500,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T033 wire push dispatcher relay→in-band fallback`.
 
 ### T034 — Wire 5 eventos canônicos → pushDispatcher
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T033, T021, T023, T024
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/events/canonical.ts`
