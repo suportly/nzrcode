@@ -10,7 +10,7 @@
 ## Task list
 
 ### T001 — Smoke (RED)
-- **Status:** pending
+- **Status:** done
 - **Files:**
   - create: `test/nzrcode-authenticated-device-id/{test_files_exist,test_wired,test_no_new_deps,run_all}.sh`
   - create: `test/nzrcode-authenticated-device-id/README.md`
@@ -22,7 +22,7 @@
   - [ ] Commit: `test(nzr-bridge): T001 add authenticated-deviceId smoke (RED)`.
 
 ### T002 — wsServer wrapper: `authenticatedDeviceId` getter + setter
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - modify: `extensions/nzrcode-bridge/src/server/wsServer.ts`
@@ -33,7 +33,7 @@
   - [ ] Commit: `feat(nzr-bridge): T002 add BridgeConnection.authenticatedDeviceId`.
 
 ### T003 — Dispatcher attaches deviceId post-auth + tests
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - modify: `extensions/nzrcode-bridge/src/server/dispatcher.ts`
@@ -46,7 +46,7 @@
   - [ ] Commit: `feat(nzr-bridge): T003 attach deviceId on successful authenticate`.
 
 ### T004 — Verify + push + PR
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T003
 - **Files:**
   - create: `specs/0019-authenticated-device-id/evidence/run_all_output.txt`
