@@ -7,7 +7,7 @@ import 'mocha';
 import * as assert from 'assert/strict';
 import { Dispatcher } from '../../server/dispatcher';
 import type { Logger } from '../../server/dispatcher';
-import { generateToken } from '../../server/auth';
+import { findTokenMatch, generateToken } from '../../server/auth';
 import { MethodName } from '../../protocol/methods';
 import type { BridgeConnection } from '../../server/wsServer';
 
@@ -72,7 +72,11 @@ function parseSent(conn: FakeConnection, index = 0): Record<string, unknown> {
 
 function makeDispatcher(token: string, logger?: Logger): Dispatcher {
     const { logger: defaultLogger } = makeLogger();
-    return new Dispatcher({ token, logger: logger ?? defaultLogger });
+    const tokens: Record<string, string> = { 'test-device': token };
+    return new Dispatcher({
+        lookupToken: candidate => findTokenMatch(tokens, undefined, candidate),
+        logger: logger ?? defaultLogger,
+    });
 }
 
 function attachFresh(token: string, logger?: Logger): { dispatcher: Dispatcher; conn: FakeConnection } {

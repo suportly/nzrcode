@@ -13,7 +13,7 @@ import type { PairWebviewHandle } from './pairing/pairCommand';
 import { runRevokeIpadCommand } from './pairing/revokeCommand';
 import type { RevokeQuickPickItem } from './pairing/revokeCommand';
 import { discoverEndpoints } from './pairing/endpoints';
-import { loadOrCreateState, rotateToken } from './server/state';
+import { loadOrCreateState, removeToken } from './server/state';
 import type { Logger } from './server/dispatcher';
 
 let _runtime: BridgeRuntime | undefined;
@@ -109,7 +109,8 @@ function registerRevokeCommand(context: vscode.ExtensionContext, store: PairedDe
 					_runtime = undefined;
 				}
 			},
-			rotateToken: async () => { rotateToken(); },
+			removeDeviceToken: async (deviceId) => { removeToken(deviceId); },
+			remainingDevicesCount: () => store.list().length,
 			showInformationMessage: (message) => { void vscode.window.showInformationMessage(message); },
 			now: () => Date.now(),
 		});

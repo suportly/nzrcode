@@ -21,7 +21,7 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import WebSocket from 'ws';
-import { generateToken } from '../../server/auth';
+import { findTokenMatch, generateToken } from '../../server/auth';
 import { Dispatcher } from '../../server/dispatcher';
 import type { BridgeConnection, BridgeWsServer } from '../../server/wsServer';
 import { startBridgeWsServer } from '../../server/wsServer';
@@ -122,7 +122,7 @@ suite('integration — e2e (auth → hello → commands → terminal events)', f
         token = generateToken();
         const file = stateFilePath();
         fs.mkdirSync(path.dirname(file), { recursive: true, mode: 0o700 });
-        fs.writeFileSync(file, JSON.stringify({ version: 1, token }), { mode: 0o600 });
+        fs.writeFileSync(file, JSON.stringify({ version: 2, tokens: { 'test-device': token } }), { mode: 0o600 });
     });
 
     teardown(async () => {
@@ -135,8 +135,9 @@ suite('integration — e2e (auth → hello → commands → terminal events)', f
     test('full happy path: authenticate → hello → commands.execute → events.subscribe → terminal.data', async () => {
         const vs = makeFakeVsCode();
 
+        const tokens: Record<string, string> = { 'test-device': token };
         const dispatcher = new Dispatcher({
-            token,
+            lookupToken: candidate => findTokenMatch(tokens, undefined, candidate),
             logger: { info: () => undefined, warn: () => undefined, error: () => undefined },
         });
 
@@ -234,8 +235,9 @@ suite('integration — e2e (auth → hello → commands → terminal events)', f
     });
 
     test('a client with the wrong token is rejected with the auth close code', async () => {
+        const tokens: Record<string, string> = { 'test-device': token };
         const dispatcher = new Dispatcher({
-            token,
+            lookupToken: candidate => findTokenMatch(tokens, undefined, candidate),
             logger: { info: () => undefined, warn: () => undefined, error: () => undefined },
         });
         registerSystemHandlers(dispatcher, {

@@ -77,4 +77,55 @@ suite('PairingController', () => {
 		const typed: MethodResult[MethodName.SystemRegister] = result;
 		assert.equal(typed.registered, true);
 	});
+
+	test('onPair is invoked with the deviceId BEFORE the pairing signal resolves', async () => {
+		const order: string[] = [];
+		const onPair = async (deviceId: string) => {
+			order.push(`onPair:${deviceId}`);
+		};
+		const ctrl = new PairingController({ onPair });
+		void ctrl.pairingSignal.then(() => order.push('signal-resolved'));
+
+		const handler = ctrl.createHandler();
+		await handler({ deviceId: 'd-alpha', deviceName: 'iPad' });
+		// Allow the resolved-then callback to run.
+		await new Promise<void>(r => setImmediate(r));
+
+		assert.deepEqual(order, ['onPair:d-alpha', 'signal-resolved']);
+	});
+
+	test('onPair is invoked only on the first register call', async () => {
+		const calls: string[] = [];
+		const ctrl = new PairingController({ onPair: (id) => { calls.push(id); } });
+		const handler = ctrl.createHandler();
+
+		await handler({ deviceId: 'd-1', deviceName: 'first' });
+		await handler({ deviceId: 'd-2', deviceName: 'second' });
+
+		assert.deepEqual(calls, ['d-1']);
+	});
+
+	test('a throwing onPair prevents the signal from resolving', async () => {
+		const failure = new Error('disk full');
+		const ctrl = new PairingController({ onPair: () => { throw failure; } });
+		const handler = ctrl.createHandler();
+
+		await assert.rejects(handler({ deviceId: 'd-1', deviceName: 'iPad' }), /disk full/);
+
+		// The signal must still be pending.
+		const settled = await Promise.race([
+			ctrl.pairingSignal.then(() => 'resolved'),
+			new Promise<string>(r => setTimeout(() => r('pending'), 20)),
+		]);
+		assert.equal(settled, 'pending');
+	});
+
+	test('no onPair dep is a backwards-compatible default', async () => {
+		const ctrl = new PairingController();
+		const handler = ctrl.createHandler();
+		const result = await handler({ deviceId: 'd-1', deviceName: 'iPad' });
+		assert.deepEqual(result, { registered: true });
+		const signal = await ctrl.pairingSignal;
+		assert.equal(signal.deviceId, 'd-1');
+	});
 });

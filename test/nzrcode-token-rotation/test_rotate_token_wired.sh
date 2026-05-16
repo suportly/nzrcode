@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
-# Spec: specs/0015-bridge-token-rotation-on-revoke/spec.md — In scope items 1 & 2
+# Spec: specs/0018-per-device-tokens/spec.md
+#
+# Originally written for feature 0015 (rotate shared token on revoke).
+# Feature 0018 supersedes that approach with per-device tokens: revoke now
+# deletes only the revoked device's entry, leaving other paired devices
+# operational. This smoke validates the superseded contract:
+#
+#   - state.ts exports removeToken (the per-device replacement for the
+#     old rotateToken),
+#   - RevokeIpadDeps carries removeDeviceToken (was: rotateToken),
+#   - runRevokeIpadCommand calls deps.removeDeviceToken (was: rotateToken),
+#   - the success message no longer asks the user to "re-pair" — other
+#     paired devices stay connected.
+
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
@@ -14,28 +27,27 @@ for f in "$STATE" "$REVOKE"; do
   fi
 done
 
-if ! grep -Eq "export function rotateToken\b" "$STATE"; then
-  echo "FAIL: state.ts must export function rotateToken()"
+if ! grep -Eq "export function removeToken\b" "$STATE"; then
+  echo "FAIL: state.ts must export function removeToken() (replaces rotateToken)"
   fail=1
 fi
 
-if ! grep -Eq "rotateToken\s*:\s*\(\s*\)\s*=>\s*Promise<void>" "$REVOKE"; then
-  echo "FAIL: RevokeIpadDeps must declare rotateToken: () => Promise<void>"
+if ! grep -Eq "removeDeviceToken\s*:\s*\(\s*deviceId" "$REVOKE"; then
+  echo "FAIL: RevokeIpadDeps must declare removeDeviceToken: (deviceId: string) => Promise<void>"
   fail=1
 fi
 
-if ! grep -Fq "deps.rotateToken()" "$REVOKE"; then
-  echo "FAIL: runRevokeIpadCommand must call deps.rotateToken()"
+if ! grep -Fq "deps.removeDeviceToken" "$REVOKE"; then
+  echo "FAIL: runRevokeIpadCommand must call deps.removeDeviceToken"
   fail=1
 fi
 
-# Re-pair guidance must surface in the success message.
-if ! grep -Eq "re-pair|repair" "$REVOKE"; then
-  echo "FAIL: success message must mention re-pairing"
+if ! grep -Eq "stays connected|stay connected" "$REVOKE"; then
+  echo "FAIL: success message must mention that other devices stay connected"
   fail=1
 fi
 
 if [ "$fail" -eq 0 ]; then
-  echo "PASS: rotateToken wired into state.ts + revokeCommand.ts"
+  echo "PASS: revoke targets a single device's token (per-device tokens — feature 0018)"
 fi
 exit "$fail"

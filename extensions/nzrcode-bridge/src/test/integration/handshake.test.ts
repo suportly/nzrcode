@@ -29,7 +29,7 @@ function silentLogger(): Logger {
 function writeStateFile(token: string): void {
     const filePath = stateFilePath();
     fs.mkdirSync(path.dirname(filePath), { recursive: true, mode: 0o700 });
-    fs.writeFileSync(filePath, JSON.stringify({ version: 1, token }), { mode: 0o600 });
+    fs.writeFileSync(filePath, JSON.stringify({ version: 2, tokens: { 'test-device': token } }), { mode: 0o600 });
 }
 
 interface JsonRpcAnyResponse {

@@ -20,7 +20,7 @@ import type { JsonRpcId, JsonRpcError } from '../protocol/jsonrpc';
 import { MethodName } from '../protocol/methods';
 import type { MethodParams, MethodResult } from '../protocol/methods';
 import { BridgeErrorCode, bridgeError } from '../protocol/errors';
-import { validateToken } from './auth';
+import type { TokenLookupResult } from './auth';
 import { logRequest } from '../logging';
 import type { BridgeConnection } from './wsServer';
 
@@ -41,8 +41,12 @@ export type Handler<M extends MethodName> = (
 ) => Promise<MethodResult[M]> | MethodResult[M];
 
 export interface DispatcherDeps {
-    /** The bridge's auth token (loaded from state.ts). Used to authenticate clients. */
-    readonly token: string;
+    /**
+     * Look up an inbound candidate token against the per-device tokens
+     * map (and any in-flight pair-time slot the caller owns).
+     * Returns the matched device identity, or undefined on miss.
+     */
+    readonly lookupToken: (candidate: string) => TokenLookupResult | undefined;
     /** Structured logger. Pass console-compat or a vscode.OutputChannel adapter. */
     readonly logger: Logger;
 }
@@ -118,7 +122,7 @@ export class Dispatcher {
         frame: string,
         onSuccess: () => void,
     ): void {
-        const { token, logger } = this._deps;
+        const { lookupToken, logger } = this._deps;
         const remoteAddress = conn.remoteAddress;
 
         let parsed;
@@ -147,7 +151,12 @@ export class Dispatcher {
             ...logRequest({ method: parsed.method, params, remoteAddress }),
         });
 
-        if (typeof candidateToken !== 'string' || !validateToken(token, candidateToken)) {
+        if (typeof candidateToken !== 'string') {
+            closeWithAuthFailure(conn, parsed.id, logger, remoteAddress, 'invalid_token');
+            return;
+        }
+        const lookup = lookupToken(candidateToken);
+        if (!lookup) {
             closeWithAuthFailure(conn, parsed.id, logger, remoteAddress, 'invalid_token');
             return;
         }

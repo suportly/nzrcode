@@ -41,8 +41,8 @@ if ! grep -Fq "context.subscriptions.push" "$EXT"; then
   fail=1
 fi
 
-if ! grep -Fq "rotateToken" "$EXT"; then
-  echo "FAIL: revoke wiring must call rotateToken from state.ts"
+if ! grep -Fq "removeToken" "$EXT"; then
+  echo "FAIL: revoke wiring must call removeToken from state.ts (per-device tokens — feature 0018)"
   fail=1
 fi
 
