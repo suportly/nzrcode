@@ -366,7 +366,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T024 add debug session control handlers`.
 
 ### T025 — `notifications.ts` (register, unregister, preferences) com mute test
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T016, T011
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/rpc/notifications.ts`
