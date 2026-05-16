@@ -10,7 +10,7 @@
 ## Task list
 
 ### T001 — Smoke + mocha stubs (RED)
-- **Status:** pending
+- **Status:** done
 - **Files:**
   - create: `test/nzrcode-per-device-tokens/{test_files_exist,test_schema_v2,test_helpers_present,test_no_new_deps,run_all}.sh`
   - create: `test/nzrcode-per-device-tokens/README.md`
@@ -24,7 +24,7 @@
   - [ ] Commit: `test(nzr-bridge): T001 add per-device-tokens smoke + mocha stub (RED)`.
 
 ### T002 — Schema v2 + state helpers + tests
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - modify: `extensions/nzrcode-bridge/src/server/state.ts`
@@ -40,7 +40,7 @@
   - [ ] Commit: `feat(nzr-bridge): T002 migrate bridge state to schema v2 with per-device tokens`.
 
 ### T003 — `findTokenMatch` in auth.ts
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - modify: `extensions/nzrcode-bridge/src/server/auth.ts`
@@ -53,7 +53,7 @@
   - [ ] Commit: `feat(nzr-bridge): T003 add findTokenMatch for per-device tokens`.
 
 ### T004 — Dispatcher uses `lookupToken`
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T003
 - **Files:**
   - modify: `extensions/nzrcode-bridge/src/server/dispatcher.ts`
@@ -67,7 +67,7 @@
   - [ ] Commit: `feat(nzr-bridge): T004 dispatcher uses per-device lookupToken`.
 
 ### T005 — `startPairableBridge` + `PairingController` promotion
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T004
 - **Files:**
   - modify: `extensions/nzrcode-bridge/src/bridge.ts`
@@ -81,7 +81,7 @@
   - [ ] Commit: `feat(nzr-bridge): T005 promote pending pair token into per-device tokens`.
 
 ### T006 — Revoke uses `removeDeviceToken`
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T005
 - **Files:**
   - modify: `extensions/nzrcode-bridge/src/pairing/revokeCommand.ts`
@@ -99,7 +99,7 @@
   - [ ] Commit: `feat(nzr-bridge): T006 revoke now targets a single device, leaves others connected`.
 
 ### T007 — Verify + push + PR
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T006
 - **Files:**
   - create: `specs/0018-per-device-tokens/evidence/run_all_output.txt`
