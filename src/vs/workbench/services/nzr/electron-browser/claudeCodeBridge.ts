@@ -23,12 +23,12 @@ const SIGKILL_GRACE_MS = 5_000;
 
 interface SessionEntry {
 	handle: ClaudeSessionHandle;
-	child: cp.ChildProcessWithoutNullStreams | undefined;
+	child: cp.ChildProcess | undefined;
 	stdout: string;
 	stderr: string;
 	startedAtMs: number;
-	cancelTimer?: NodeJS.Timeout;
-	timeoutTimer?: NodeJS.Timeout;
+	cancelTimer?: ReturnType<typeof setTimeout>;
+	timeoutTimer?: ReturnType<typeof setTimeout>;
 	cancelled: boolean;
 	timedOut: boolean;
 }
@@ -78,7 +78,7 @@ export class ClaudeCodeBridge extends Disposable implements IClaudeCodeBridge {
 		};
 		this._sessions.set(sessionId, entry);
 
-		let child: cp.ChildProcessWithoutNullStreams;
+		let child: cp.ChildProcess;
 		try {
 			child = cp.spawn(BIN, argv, {
 				cwd: options.repoPath,
@@ -105,7 +105,7 @@ export class ClaudeCodeBridge extends Disposable implements IClaudeCodeBridge {
 			}, SIGKILL_GRACE_MS);
 		}, timeoutMs);
 
-		child.stdout.on('data', chunk => {
+		child.stdout!.on('data', chunk => {
 			const data = chunk.toString();
 			entry.stdout += data;
 			this._onSessionOutput.fire({
@@ -116,7 +116,7 @@ export class ClaudeCodeBridge extends Disposable implements IClaudeCodeBridge {
 			});
 		});
 
-		child.stderr.on('data', chunk => {
+		child.stderr!.on('data', chunk => {
 			const data = chunk.toString();
 			entry.stderr += data;
 			this._onSessionOutput.fire({

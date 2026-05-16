@@ -55,7 +55,7 @@ export class StationViewPane extends ViewPane {
 
 		this._register(this._missionControl.onDidChangeSlots(() => this._renderAll()));
 		this._register(this._stationRegistry.onStationStageChanged(evt => this._patchByStageChange(evt)));
-		this._register(this._claudeBridge.onSessionOutput(chunk => this._appendOutput(chunk.sessionId, chunk.text)));
+		this._register(this._claudeBridge.onSessionOutput(chunk => this._appendOutput(chunk.sessionId, chunk.data)));
 	}
 
 	protected override renderBody(container: HTMLElement): void {
