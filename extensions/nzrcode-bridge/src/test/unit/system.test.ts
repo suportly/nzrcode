@@ -98,7 +98,7 @@ suite('rpc/system', () => {
     suite('registerSystemHandlers', () => {
 
         test('registers system.hello on the dispatcher', () => {
-            const dispatcher = new Dispatcher({ token: 't'.repeat(43), logger: makeLogger() });
+            const dispatcher = new Dispatcher({ lookupToken: () => undefined, logger: makeLogger() });
 
             registerSystemHandlers(dispatcher, {
                 serverVersion: '1.0.0',
@@ -109,7 +109,7 @@ suite('rpc/system', () => {
         });
 
         test('throws when called twice (idempotency is the caller\'s problem)', () => {
-            const dispatcher = new Dispatcher({ token: 't'.repeat(43), logger: makeLogger() });
+            const dispatcher = new Dispatcher({ lookupToken: () => undefined, logger: makeLogger() });
 
             registerSystemHandlers(dispatcher, {
                 serverVersion: '1.0.0',

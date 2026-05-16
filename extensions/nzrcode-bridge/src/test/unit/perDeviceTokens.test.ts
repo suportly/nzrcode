@@ -17,8 +17,6 @@ import {
 } from '../../server/state';
 import { findTokenMatch } from '../../server/auth';
 
-const TOKEN_RE = /^[A-Za-z0-9_-]{43}$/;
-
 let tmpHome: string;
 
 suite('Per-device tokens — state', () => {

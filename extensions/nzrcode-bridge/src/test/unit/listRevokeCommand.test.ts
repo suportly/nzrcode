@@ -37,11 +37,11 @@ suite('pairing/listCommand', () => {
 
         const deps: ListPairedDevicesDeps = {
             listDevices: () => opts.devices ?? [],
-            showQuickPick: async (items) => {
+            showQuickPick: async <T extends { label: string; description?: string }>(items: readonly T[]) => {
                 for (const it of items) {
                     shownItems.push({ label: it.label, description: it.description });
                 }
-                return opts.pickResult;
+                return opts.pickResult as T | undefined;
             },
             showInformationMessage: (msg) => { infoMessages.push(msg); },
             now: () => Date.now(),
@@ -84,7 +84,7 @@ suite('pairing/listCommand', () => {
         });
         // Override `now` to make the humaniser deterministic.
         const fixedNow = now;
-        deps.now = () => fixedNow;
+        (deps as { now: () => number }).now = () => fixedNow;
 
         await runListPairedDevicesCommand(deps);
 
@@ -120,9 +120,9 @@ suite('pairing/revokeCommand', () => {
 
         const deps: RevokeIpadDeps = {
             listDevices: () => opts.devices ?? [],
-            showQuickPick: async (items) => {
+            showQuickPick: async <T extends RevokeQuickPickItem>(items: readonly T[]) => {
                 if (opts.pickedDeviceId === undefined) { return undefined; }
-                return (items as readonly RevokeQuickPickItem[]).find(i => i.deviceId === opts.pickedDeviceId);
+                return items.find(i => i.deviceId === opts.pickedDeviceId);
             },
             confirmRevoke: async () => opts.confirmRevoke ?? true,
             revokeDevice: async (deviceId) => {

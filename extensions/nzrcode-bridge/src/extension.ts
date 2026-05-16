@@ -31,7 +31,7 @@ function buildLogger(channel: vscode.OutputChannel): Logger {
 	};
 }
 
-function registerListCommand(context: vscode.ExtensionContext, store: PairedDeviceStore): vscode.Disposable {
+function registerListCommand(_context: vscode.ExtensionContext, store: PairedDeviceStore): vscode.Disposable {
 	return vscode.commands.registerCommand('nzrcode-bridge.listPairedDevices', async () => {
 		await runListPairedDevicesCommand({
 			listDevices: () => store.list(),
@@ -87,7 +87,7 @@ function registerPairCommand(
 	});
 }
 
-function registerRevokeCommand(context: vscode.ExtensionContext, store: PairedDeviceStore): vscode.Disposable {
+function registerRevokeCommand(_context: vscode.ExtensionContext, store: PairedDeviceStore): vscode.Disposable {
 	return vscode.commands.registerCommand('nzrcode-bridge.revokeIpad', async () => {
 		await runRevokeIpadCommand({
 			listDevices: () => store.list(),

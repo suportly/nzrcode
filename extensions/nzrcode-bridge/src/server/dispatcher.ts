@@ -94,7 +94,7 @@ export class Dispatcher {
         if (this._handlers.has(method)) {
             throw new Error(`Dispatcher: method "${method}" is already registered`);
         }
-        this._handlers.set(method, handler as Handler<MethodName>);
+        this._handlers.set(method, handler as unknown as Handler<MethodName>);
     }
 
     /** Returns the list of registered method names (for `system.hello` capabilities). */

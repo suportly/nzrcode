@@ -110,7 +110,7 @@ suite('PairingController', () => {
 		const ctrl = new PairingController({ onPair: () => { throw failure; } });
 		const handler = ctrl.createHandler();
 
-		await assert.rejects(handler({ deviceId: 'd-1', deviceName: 'iPad' }), /disk full/);
+		await assert.rejects(Promise.resolve(handler({ deviceId: 'd-1', deviceName: 'iPad' })), /disk full/);
 
 		// The signal must still be pending.
 		const settled = await Promise.race([
