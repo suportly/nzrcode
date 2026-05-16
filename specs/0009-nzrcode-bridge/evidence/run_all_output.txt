@@ -1,0 +1,14 @@
+----- test_files_exist.sh -----
+test_files_exist: OK
+----- test_no_new_deps_root.sh -----
+test_no_new_deps_root: OK
+----- test_built_in_registration.sh -----
+test_built_in_registration: OK
+----- mocha (unit + integration) -----
+    ✔ T12: onConnection throw closes socket with code 1011; server stays alive
+
+
+  330 passing (1s)
+
+mocha: OK
+===== run_all: OK =====

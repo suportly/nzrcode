@@ -1,0 +1,64 @@
+{
+  "name": "nzrcode-bridge",
+  "displayName": "%displayName%",
+  "description": "%description%",
+  "version": "10.0.0",
+  "publisher": "vscode",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.5.0"
+  },
+  "icon": "media/icon.png",
+  "capabilities": {
+    "virtualWorkspaces": false,
+    "untrustedWorkspaces": {
+      "supported": true
+    }
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "nzrcode-bridge.pairIpad",
+        "title": "%command.pairIpad%",
+        "category": "%category%"
+      },
+      {
+        "command": "nzrcode-bridge.listPairedDevices",
+        "title": "%command.listPairedDevices%",
+        "category": "%category%"
+      },
+      {
+        "command": "nzrcode-bridge.revokeIpad",
+        "title": "%command.revokeIpad%",
+        "category": "%category%"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "gulp compile-extension:nzrcode-bridge",
+    "watch": "gulp watch-extension:nzrcode-bridge",
+    "test": "node ../../node_modules/mocha/bin/mocha"
+  },
+  "dependencies": {
+    "qrcode-generator": "^1.4.4"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "22.x",
+    "tsx": "^4.22.0"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "arrowParens": "avoid"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/vscode.git"
+  }
+}

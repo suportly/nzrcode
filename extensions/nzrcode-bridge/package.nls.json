@@ -1,0 +1,8 @@
+{
+	"displayName": "nzrcode Bridge",
+	"description": "Exposes nzrcode to a paired iPad companion app over a local-only JSON-RPC WebSocket.",
+	"category": "nzrcode",
+	"command.pairIpad": "Pair iPad",
+	"command.listPairedDevices": "List Paired Devices",
+	"command.revokeIpad": "Revoke iPad"
+}
