@@ -142,7 +142,7 @@ export class AiadevAdapter extends Disposable implements IAiadevAdapter {
 			const start = Date.now();
 			const timeoutMs = runArgs.timeoutMs ?? DEFAULT_TIMEOUT_MS;
 
-			let child: cp.ChildProcessWithoutNullStreams;
+			let child: cp.ChildProcess;
 			try {
 				child = cp.spawn(BIN, args, {
 					cwd: runArgs.cwd,
@@ -176,8 +176,8 @@ export class AiadevAdapter extends Disposable implements IAiadevAdapter {
 				}, SIGKILL_GRACE_MS);
 			}, timeoutMs);
 
-			child.stdout.on('data', chunk => { stdout += chunk.toString(); });
-			child.stderr.on('data', chunk => { stderr += chunk.toString(); });
+			child.stdout!.on('data', chunk => { stdout += chunk.toString(); });
+			child.stderr!.on('data', chunk => { stderr += chunk.toString(); });
 
 			child.on('error', err => {
 				clearTimeout(sigterm);

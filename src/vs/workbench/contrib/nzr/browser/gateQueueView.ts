@@ -70,7 +70,7 @@ export class GateQueueViewPane extends ViewPane {
 	private _render(): void {
 		if (!this._list || !this._emptyState) { return; }
 
-		const items = deriveGateItems(this._stationRegistry.stations);
+		const items: readonly GateItem[] = deriveGateItems(this._stationRegistry.stations);
 
 		if (items.length === 0) {
 			this._disposeAllCards();
@@ -135,7 +135,4 @@ export class GateQueueViewPane extends ViewPane {
 		super.dispose();
 	}
 
-	private _consumed(_unused: GateItem): void {
-		// Type-only reference to keep GateItem import alive in tooling.
-	}
 }
