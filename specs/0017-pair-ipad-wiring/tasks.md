@@ -10,7 +10,7 @@
 ## Task list
 
 ### T001 — Smoke + mocha stub (RED)
-- **Status:** pending
+- **Status:** done
 - **Files:**
   - create: `test/nzrcode-pair-wiring/{test_files_exist,test_protocol_extended,test_pair_wired,test_no_new_deps,run_all}.sh`
   - create: `test/nzrcode-pair-wiring/README.md`
@@ -24,7 +24,7 @@
   - [ ] Commit: `test(nzr-bridge): T001 add pair-wiring smoke + mocha stub (RED)`.
 
 ### T002 — Protocol: add SystemRegister
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - modify: `extensions/nzrcode-bridge/src/protocol/methods.ts`
@@ -35,7 +35,7 @@
   - [ ] Commit: `feat(nzr-bridge): T002 add system.register protocol method`.
 
 ### T003 — PairingController + handler
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/pairing/pairingController.ts`
@@ -47,7 +47,7 @@
   - [ ] Commit: `feat(nzr-bridge): T003 add PairingController + system.register handler`.
 
 ### T004 — startPairableBridge in bridge.ts
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T003
 - **Files:**
   - modify: `extensions/nzrcode-bridge/src/bridge.ts`
@@ -59,7 +59,7 @@
   - [ ] Commit: `feat(nzr-bridge): T004 add startPairableBridge with pairingSignal`.
 
 ### T005 — Wire pairIpad in extension.ts
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T004
 - **Files:**
   - modify: `extensions/nzrcode-bridge/src/extension.ts`
@@ -70,7 +70,7 @@
   - [ ] Commit: `feat(nzr-bridge): T005 wire nzrcode-bridge.pairIpad palette command`.
 
 ### T006 — Verify + push + PR
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T005
 - **Files:**
   - create: `specs/0017-pair-ipad-wiring/evidence/run_all_output.txt`
