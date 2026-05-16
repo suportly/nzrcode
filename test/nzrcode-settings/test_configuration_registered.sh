@@ -4,11 +4,16 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 CONTRIB="$ROOT/src/vs/workbench/contrib/nzr/browser/settings.contribution.ts"
+HELPERS="$ROOT/src/vs/workbench/contrib/nzr/browser/nzrPipelineSettings.ts"
 MAIN="$ROOT/src/vs/workbench/workbench.common.main.ts"
 
 fail=0
 if [ ! -f "$CONTRIB" ]; then
   echo "FAIL: $CONTRIB missing"
+  exit 1
+fi
+if [ ! -f "$HELPERS" ]; then
+  echo "FAIL: $HELPERS missing"
   exit 1
 fi
 
@@ -22,19 +27,22 @@ if ! grep -Eq "id:\s*['\"]nzrcode['\"]" "$CONTRIB"; then
   fail=1
 fi
 
+# Setting keys may live in nzrPipelineSettings.ts as constants and be
+# referenced from settings.contribution.ts via SETTING_* names. Accept
+# either location.
 for key in \
   "nzrcode.pipeline.defaultPreset" \
   "nzrcode.pipeline.defaultBranch" \
   "nzrcode.welcome.showOnStartup" \
   "nzrcode.missionControl.autoActivate"; do
-  if ! grep -Fq "$key" "$CONTRIB"; then
-    echo "FAIL: setting key '$key' not present in contribution"
+  if ! grep -Fq "$key" "$CONTRIB" && ! grep -Fq "$key" "$HELPERS"; then
+    echo "FAIL: setting key '$key' not present in contribution or helpers"
     fail=1
   fi
 done
 
-if ! grep -Eq "'lean'|\"lean\"" "$CONTRIB"; then
-  echo "FAIL: contribution must reference 'lean' as the preset default"
+if ! grep -Eq "'lean'|\"lean\"" "$CONTRIB" && ! grep -Eq "'lean'|\"lean\"" "$HELPERS"; then
+  echo "FAIL: 'lean' must appear as the preset default in contribution or helpers"
   fail=1
 fi
 
