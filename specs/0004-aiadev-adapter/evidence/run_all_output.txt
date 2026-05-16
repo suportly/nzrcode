@@ -1,0 +1,13 @@
+=== test_files_exist.sh ===
+PASS: aiadev adapter feature files present
+
+=== test_interface_shape.sh ===
+PASS: aiadev adapter interface shape
+
+=== test_parser.sh ===
+PASS: clarifyMarkerParser shape and mocha coverage (6 test cases)
+
+=== test_registration.sh ===
+PASS: AiadevAdapter singleton registered and wired into desktop main
+
+Summary: all aiadev adapter smoke tests passed
