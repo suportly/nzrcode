@@ -206,6 +206,27 @@ export function deleteState(): void {
 	_cached = undefined;
 }
 
+/**
+ * Rotate the bridge auth token. Generates a fresh 32-byte base64url
+ * token, preserves `lastPort` from the current state, and persists via
+ * `saveState`. Called after `nzrcode: Revoke iPad` to invalidate any
+ * copy of the previous token that the revoked device (or anyone else)
+ * may have retained.
+ *
+ * If no state has been loaded yet in this process, `loadOrCreateState`
+ * runs first so the call is total.
+ */
+export function rotateToken(): BridgeState {
+	const previous = _cached ?? loadOrCreateState();
+	const next: BridgeState = {
+		token: generateToken(),
+		version: 1,
+		...(previous.lastPort !== undefined ? { lastPort: previous.lastPort } : {}),
+	};
+	saveState(next);
+	return next;
+}
+
 // ---------------------------------------------------------------------------
 // Atomic write helper
 // ---------------------------------------------------------------------------
