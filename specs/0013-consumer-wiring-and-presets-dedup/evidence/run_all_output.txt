@@ -1,0 +1,19 @@
+=== test_files_exist.sh ===
+PASS: Consumer Wiring feature files present
+
+=== test_presets_deduped.sh ===
+PASS: PRESETS deduplicated into nzrPipelineSettings.ts
+
+=== test_addstation_uses_settings.sh ===
+PASS: AddStation consumes settings via resolveAddStationDefaults
+
+=== test_welcome_uses_settings.sh ===
+PASS: Welcome gates auto-show with the showOnStartup setting
+
+=== test_no_new_deps.sh ===
+test_no_new_deps: OK
+
+=== test_i18n_strings.sh ===
+PASS: Consumer Wiring strings localized
+
+Summary: all Consumer Wiring smoke tests passed
