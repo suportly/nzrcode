@@ -23,15 +23,14 @@ import type { MutePreferences } from '../../rpc/notifications';
 function makeEmitter<T>(): EmitterLike<T> & { fire(value: T): void } {
     type Listener = (value: T) => void;
     const listeners = new Set<Listener>();
-    return {
-        event: (listener) => {
-            listeners.add(listener);
-            return { dispose: () => listeners.delete(listener) };
-        },
-        fire: (value: T) => {
-            for (const l of [...listeners]) { l(value); }
-        },
+    const event = ((listener: Listener) => {
+        listeners.add(listener);
+        return { dispose: () => listeners.delete(listener) };
+    }) as unknown as EmitterLike<T> & { fire(value: T): void };
+    event.fire = (value: T) => {
+        for (const l of [...listeners]) { l(value); }
     };
+    return event;
 }
 
 function device(deviceId: string): PairedDevice {
@@ -71,11 +70,11 @@ function makeHarness(devices: readonly PairedDevice[] = [device('d-1')]): Harnes
     const deviceList = [...devices];
 
     const deps: CanonicalEventsDeps = {
-        onTaskEnded: taskEnded.event,
-        onShellEnded: shellEnded.event,
-        onClaudePermissionRequest: claudePermission.event,
-        onDebugStopped: debugStopped.event,
-        onConnectionChanged: connectionChanged.event,
+        onTaskEnded: taskEnded,
+        onShellEnded: shellEnded,
+        onClaudePermissionRequest: claudePermission,
+        onDebugStopped: debugStopped,
+        onConnectionChanged: connectionChanged,
         listPairedDevices: () => deviceList,
         getPreferences: async (deviceId) => mutePrefs.get(deviceId),
         pushDispatcher: dispatcher,

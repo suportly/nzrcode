@@ -10,18 +10,15 @@ import { EventName, MethodName, type EventPayload, type MethodParams, type Metho
 // These assignments do nothing at runtime but cause a TypeScript error if any
 // MethodName key is missing from MethodParams, MethodResult, or EventPayload.
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _methodParamsExhaustive: { [K in MethodName]: MethodParams[K] } = null as unknown as {
+export const _methodParamsExhaustive: { [K in MethodName]: MethodParams[K] } = null as unknown as {
     [K in MethodName]: MethodParams[K];
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _methodResultExhaustive: { [K in MethodName]: MethodResult[K] } = null as unknown as {
+export const _methodResultExhaustive: { [K in MethodName]: MethodResult[K] } = null as unknown as {
     [K in MethodName]: MethodResult[K];
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _eventPayloadExhaustive: { [K in EventName]: EventPayload[K] } = null as unknown as {
+export const _eventPayloadExhaustive: { [K in EventName]: EventPayload[K] } = null as unknown as {
     [K in EventName]: EventPayload[K];
 };
 

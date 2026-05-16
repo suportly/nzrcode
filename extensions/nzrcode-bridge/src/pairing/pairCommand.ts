@@ -29,6 +29,14 @@ export interface PairingResult {
 
 export interface BridgeRuntimeHandle {
     readonly port: number;
+    /**
+     * The token the QR payload should advertise: the in-memory pending
+     * pair token that `startPairableBridge` minted for this flow. Once
+     * the iPad calls `system.register`, the bridge promotes this token
+     * into the persistent per-device tokens map (feature 0018) under
+     * the real deviceId.
+     */
+    readonly token: string;
     readonly pairingSignal: Promise<PairingResult>;
     readonly dispose: () => Promise<void>;
 }
@@ -60,7 +68,7 @@ export async function runPairCommand(deps: PairCommandDeps): Promise<PairedDevic
     const state = deps.loadOrCreateState();
     const bridge = await deps.startBridge(state);
     const endpoints = await deps.discoverEndpoints(bridge.port);
-    const payload = buildQrPayloadFromEndpoints(state.token, endpoints);
+    const payload = buildQrPayloadFromEndpoints(bridge.token, endpoints);
     const html = renderQrWebviewHtml(payload);
     const webview = deps.openWebview(html);
 

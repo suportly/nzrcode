@@ -41,9 +41,10 @@ function makeDeps(opts: {
     const port = opts.bridgePort ?? 53120;
 
     const deps: PairCommandDeps = {
-        loadOrCreateState: () => { calls.loadCount += 1; return { token, version: 1 }; },
+        loadOrCreateState: () => { calls.loadCount += 1; return { tokens: {}, version: 2 }; },
         startBridge: async () => ({
             port,
+            token,
             pairingSignal: opts.pairingResult,
             dispose: async () => { /* no-op for test */ },
         }),

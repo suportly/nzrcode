@@ -17,7 +17,7 @@ export const PUSH_RELAY_URL = 'https://push-relay.nzrcode.dev/v1/push';
 export const PUSH_RELAY_TIMEOUT_MS = 3000;
 
 export class RelayUnavailableError extends Error {
-    constructor(reason: string, public readonly cause?: unknown) {
+    constructor(reason: string, public override readonly cause?: unknown) {
         super(`Push relay unavailable: ${reason}`);
         this.name = 'RelayUnavailableError';
     }
