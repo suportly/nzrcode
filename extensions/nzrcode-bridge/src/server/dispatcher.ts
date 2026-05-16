@@ -161,6 +161,10 @@ export class Dispatcher {
             return;
         }
 
+        if ('deviceId' in lookup) {
+            conn._setAuthenticatedDeviceId(lookup.deviceId);
+        }
+
         conn.send(serializeResponse<MethodResult[MethodName.SystemAuthenticate]>(parsed.id, { ok: true }));
         onSuccess();
     }

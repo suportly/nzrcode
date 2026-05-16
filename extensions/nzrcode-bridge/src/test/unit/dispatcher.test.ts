@@ -164,6 +164,39 @@ suite('Dispatcher — authentication gate', () => {
         const response = parseSent(conn);
         assert.equal(response['id'], requestId, 'response id must match request id');
     });
+
+    test('T15: persistent-match auth attaches authenticatedDeviceId to the connection', () => {
+        const token = generateToken();
+        const { conn } = attachFresh(token);
+        assert.equal(conn.authenticatedDeviceId, undefined, 'pre-auth must be undefined');
+
+        conn.deliver(makeRequest(1, MethodName.SystemAuthenticate, { token }));
+
+        assert.equal(conn.authenticatedDeviceId, 'test-device');
+    });
+
+    test('T16: pending-pair match leaves authenticatedDeviceId undefined', () => {
+        const pendingToken = generateToken();
+        const { logger } = makeLogger();
+        const dispatcher = new Dispatcher({
+            lookupToken: candidate => findTokenMatch({}, pendingToken, candidate),
+            logger,
+        });
+        const conn = new FakeConnection();
+        dispatcher.attach(conn);
+        assert.equal(conn.authenticatedDeviceId, undefined);
+
+        conn.deliver(makeRequest(1, MethodName.SystemAuthenticate, { token: pendingToken }));
+
+        assert.equal(conn.closed, undefined, 'pending-pair auth must succeed');
+        const response = parseSent(conn);
+        assert.deepEqual(response['result'], { ok: true });
+        assert.equal(
+            conn.authenticatedDeviceId,
+            undefined,
+            'pending-pair clients have no deviceId until system.register lands',
+        );
+    });
 });
 
 suite('Dispatcher — authenticated routing', () => {
