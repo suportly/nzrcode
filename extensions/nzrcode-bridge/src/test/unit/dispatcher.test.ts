@@ -18,6 +18,7 @@ class FakeConnection implements BridgeConnection {
     public closed: { code: number; reason: string } | undefined;
     private onMessageHandler?: (frame: string) => void;
     private onCloseHandler?: (code: number, reason: string) => void;
+    private _authenticatedDeviceId: string | undefined;
 
     readonly remoteAddress = '127.0.0.1';
 
@@ -36,6 +37,14 @@ class FakeConnection implements BridgeConnection {
         if (this.closed) { return; }
         this.closed = { code, reason: reason ?? '' };
         this.onCloseHandler?.(code, reason ?? '');
+    }
+
+    get authenticatedDeviceId(): string | undefined {
+        return this._authenticatedDeviceId;
+    }
+
+    _setAuthenticatedDeviceId(deviceId: string): void {
+        this._authenticatedDeviceId = deviceId;
     }
 
     /** Test helper: deliver a frame as if received from the client. */
