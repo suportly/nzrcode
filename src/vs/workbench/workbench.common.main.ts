@@ -474,4 +474,7 @@ import './contrib/nzr/browser/stationView.contribution.js';
 // NZRCode — Gate Queue ViewContainer (Auxiliary Bar)
 import './contrib/nzr/browser/gateQueue.contribution.js';
 
+// NZRCode — Station Palette (Add / Switch / Close commands + Cmd+Shift+S)
+import './contrib/nzr/browser/stationPalette.contribution.js';
+
 //#endregion
