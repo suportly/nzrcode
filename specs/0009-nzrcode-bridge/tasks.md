@@ -529,7 +529,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `test(nzrcode-bridge): T035 add end-to-end pairing→command→revoke integration test`.
 
 ### T036 — Smoke shell `run_all.sh`
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T035
 - **Files:**
   - create: `test/nzrcode-bridge/run_all.sh`
