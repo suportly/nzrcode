@@ -429,7 +429,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T028 add Pair iPad command orchestration`.
 
 ### T029 — `List Paired Devices` e `Revoke iPad`
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T028
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/pairing/listCommand.ts`
