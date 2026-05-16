@@ -561,7 +561,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `test(nzrcode-bridge): T037 add cold-start benchmark with methodology`.
 
 ### T038 — README + CREDITS update
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T037
 - **Files:**
   - create: `extensions/nzrcode-bridge/README.md`
