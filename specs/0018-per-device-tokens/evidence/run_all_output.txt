@@ -1,0 +1,13 @@
+=== test_files_exist.sh ===
+PASS: Per-Device Tokens feature files present
+
+=== test_schema_v2.sh ===
+PASS: schema migrated to v2 with per-device tokens
+
+=== test_helpers_present.sh ===
+PASS: per-device token helpers exported
+
+=== test_no_new_deps.sh ===
+test_no_new_deps: OK
+
+Summary: all Per-Device Tokens smoke tests passed
