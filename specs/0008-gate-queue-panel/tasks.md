@@ -10,7 +10,7 @@
 ## Task list
 
 ### T001 — Smoke + mocha stubs (RED)
-- **Status:** pending
+- **Status:** done
 - **Files:**
   - create: `test/nzrcode-gate-queue/{test_files_exist,test_view_registered,test_no_new_deps,test_i18n_strings,run_all}.sh`
   - create: `test/nzrcode-gate-queue/README.md`
@@ -25,7 +25,7 @@
   - [ ] Commit: `test(nzr-gq): T001 add Gate Queue smoke suite + mocha stubs (RED)`.
 
 ### T002 — `gateQueueItem.ts` (pure derive + summary) + tests
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - create: `src/vs/workbench/contrib/nzr/browser/gateQueueItem.ts`
@@ -40,7 +40,7 @@
   - [ ] Commit: `feat(nzr-gq): T002 add gateQueueItem derivation and summary`.
 
 ### T003 — `gateCard.ts` (pure DOM builder) + tests
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - create: `src/vs/workbench/contrib/nzr/browser/gateCard.ts`
@@ -56,7 +56,7 @@
   - [ ] Commit: `feat(nzr-gq): T003 add gateCard pure DOM builder`.
 
 ### T004 — `GateQueueViewPane` class
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T003
 - **Files:**
   - create: `src/vs/workbench/contrib/nzr/browser/gateQueueView.ts`
@@ -70,7 +70,7 @@
   - [ ] Commit: `feat(nzr-gq): T004 implement GateQueueViewPane with approve/reject wiring`.
 
 ### T005 — ViewContainer + View registration + CSS
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T004
 - **Files:**
   - create: `src/vs/workbench/contrib/nzr/browser/gateQueue.contribution.ts`
@@ -85,7 +85,7 @@
   - [ ] Commit: `feat(nzr-gq): T005 register Gate Queue ViewContainer in Auxiliary Bar`.
 
 ### T006 — Wire workbench main
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T005
 - **Files:**
   - modify: `src/vs/workbench/workbench.common.main.ts`
@@ -95,7 +95,7 @@
   - [ ] Commit: `feat(nzr-gq): T006 register gateQueue contribution in workbench main`.
 
 ### T007 — Verify + push + PR
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T006
 - **Files:**
   - create: `specs/0008-gate-queue-panel/evidence/run_all_output.txt`
