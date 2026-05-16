@@ -315,7 +315,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T020 add terminal handlers with dedicated signal method`.
 
 ### T021 — `events/publisher.ts` + `terminal.data` event streaming
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T020
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/events/publisher.ts`
