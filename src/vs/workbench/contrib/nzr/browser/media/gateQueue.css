@@ -1,0 +1,136 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Suportly. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *
+ *  Color literals here mirror `src/vs/workbench/browser/parts/nzr/theme.ts` (feature 0002).
+ *--------------------------------------------------------------------------------------------*/
+
+.nzr-gate-queue-body {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	padding: 8px;
+	box-sizing: border-box;
+	background: #0d0c0a;
+	color: #ece6dd;
+	font-family: "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+	overflow-y: auto;
+}
+
+.nzr-gate-queue-list {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.nzr-gate-queue-list.hidden,
+.nzr-gate-queue-empty.hidden {
+	display: none;
+}
+
+.nzr-gate-queue-empty {
+	flex: 1 1 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+	color: #7a7363;
+	font-size: 12px;
+	text-align: center;
+}
+
+.nzr-gate-card {
+	display: flex;
+	flex-direction: column;
+	background: #15130f;
+	border: 1px solid #2a261c;
+	border-radius: 6px;
+	padding: 8px;
+	box-sizing: border-box;
+}
+
+.nzr-gate-card__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	margin-bottom: 6px;
+}
+
+.nzr-gate-card__title {
+	font-weight: 600;
+	font-size: 12px;
+	color: #ece6dd;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.nzr-gate-card__kind-badge {
+	font-size: 10px;
+	line-height: 1;
+	padding: 3px 6px;
+	border-radius: 3px;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	flex: 0 0 auto;
+}
+
+.nzr-gate-card__kind-badge.kind-clarify         { color: #ffa45c; background: rgba(255, 164, 92, 0.12); }
+.nzr-gate-card__kind-badge.kind-spec-approval   { color: #8db8ff; background: rgba(141, 184, 255, 0.12); }
+.nzr-gate-card__kind-badge.kind-plan-approval   { color: #c9a8ff; background: rgba(201, 168, 255, 0.12); }
+.nzr-gate-card__kind-badge.kind-tasks-approval  { color: #7fd9d2; background: rgba(127, 217, 210, 0.12); }
+.nzr-gate-card__kind-badge.kind-code-review     { color: #ffd16c; background: rgba(255, 209, 108, 0.12); }
+
+.nzr-gate-card__body {
+	flex: 1 1 auto;
+}
+
+.nzr-gate-card__summary {
+	font-size: 11px;
+	line-height: 1.4;
+	color: #b8b0a1;
+	word-break: break-word;
+}
+
+.nzr-gate-card__footer {
+	display: flex;
+	gap: 6px;
+	margin-top: 8px;
+	justify-content: flex-end;
+}
+
+.nzr-gate-card__btn {
+	font-size: 11px;
+	padding: 4px 10px;
+	border-radius: 3px;
+	border: 1px solid transparent;
+	cursor: pointer;
+	font-family: inherit;
+	transition: background 80ms ease, border-color 80ms ease;
+}
+
+.nzr-gate-card__btn.btn-approve {
+	background: rgba(141, 226, 154, 0.16);
+	color: #8de29a;
+	border-color: rgba(141, 226, 154, 0.32);
+}
+.nzr-gate-card__btn.btn-approve:hover {
+	background: rgba(141, 226, 154, 0.28);
+}
+
+.nzr-gate-card__btn.btn-reject {
+	background: rgba(255, 138, 122, 0.12);
+	color: #ff8a7a;
+	border-color: rgba(255, 138, 122, 0.32);
+}
+.nzr-gate-card__btn.btn-reject:hover {
+	background: rgba(255, 138, 122, 0.24);
+}
+
+.nzr-gate-card__btn:focus-visible {
+	outline: 2px solid #ffa45c;
+	outline-offset: 1px;
+}
