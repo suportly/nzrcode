@@ -21,8 +21,8 @@ if ! grep -Eq "KeyMod\.CtrlCmd[[:space:]]*\|[[:space:]]*KeyMod\.Shift[[:space:]]
   fail=1
 fi
 
-if ! grep -Fq "nzr.missionControl.active" "$CONTRIB"; then
-  echo "FAIL: keybinding must be gated by 'nzr.missionControl.active'"
+if ! grep -Eq "(nzr\.missionControl\.active|MissionControlActiveContext)" "$CONTRIB"; then
+  echo "FAIL: keybinding must be gated by 'nzr.missionControl.active' (literal or MissionControlActiveContext)"
   fail=1
 fi
 
