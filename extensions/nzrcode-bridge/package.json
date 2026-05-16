@@ -43,6 +43,9 @@
     "watch": "gulp watch-extension:nzrcode-bridge",
     "test": "node ../../node_modules/mocha/bin/mocha"
   },
+  "dependencies": {
+    "qrcode-generator": "^1.4.4"
+  },
   "devDependencies": {
     "@types/mocha": "^10.0.6",
     "@types/node": "22.x",

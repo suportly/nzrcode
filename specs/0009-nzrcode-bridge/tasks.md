@@ -400,7 +400,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
 - **Notes:** Regra `security.md` proíbe `exec()` por padrão. Aqui args são literais mas usar `execFile` é o caminho correto.
 
 ### T027 — `qrModal.ts` webview (com assertion estrutural)
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T026, T007
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/pairing/qrModal.ts`
