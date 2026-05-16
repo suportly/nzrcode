@@ -197,6 +197,12 @@
 	],
 	"onboardingThemes": [
 		{
+			"id": "nzr-dark",
+			"label": "NZR Dark",
+			"themeId": "NZR Dark",
+			"type": "dark"
+		},
+		{
 			"id": "dark-2026",
 			"label": "Dark 2026",
 			"themeId": "Dark 2026",
