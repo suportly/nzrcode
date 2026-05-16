@@ -342,7 +342,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T022 add SCM read/stage/commit handlers`.
 
 ### T023 — `tasks.ts` (list, run, cancel)
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T016
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/rpc/tasks.ts`
