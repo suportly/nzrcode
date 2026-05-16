@@ -3,15 +3,17 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { localize, localize2 } from '../../../../nls.js';
+import { localize2 } from '../../../../nls.js';
 import { Action2, registerAction2 } from '../../../../platform/actions/common/actions.js';
 import { ICommandService } from '../../../../platform/commands/common/commands.js';
+import { IConfigurationService } from '../../../../platform/configuration/common/configuration.js';
 import { ServicesAccessor } from '../../../../platform/instantiation/common/instantiation.js';
 import { INotificationService, IPromptChoice, Severity } from '../../../../platform/notification/common/notification.js';
 import { Registry } from '../../../../platform/registry/common/platform.js';
 import { IStorageService, StorageScope, StorageTarget } from '../../../../platform/storage/common/storage.js';
 import { Extensions as WorkbenchExtensions, IWorkbenchContribution, IWorkbenchContributionsRegistry } from '../../../common/contributions.js';
 import { LifecyclePhase } from '../../../services/lifecycle/common/lifecycle.js';
+import { shouldAutoShowWelcome } from './nzrWelcomeGate.js';
 import { buildWelcomeActionDescriptors, buildWelcomeMessage, IWelcomeActionDescriptor, WELCOME_SHOWN_STORAGE_KEY } from './welcomeFlow.js';
 
 const NZR_CATEGORY = localize2('nzrCategory', 'NZR');
@@ -59,8 +61,9 @@ class WelcomeNotificationContribution implements IWorkbenchContribution {
 		@INotificationService notificationService: INotificationService,
 		@IStorageService storageService: IStorageService,
 		@ICommandService commandService: ICommandService,
+		@IConfigurationService configurationService: IConfigurationService,
 	) {
-		if (storageService.getBoolean(WELCOME_SHOWN_STORAGE_KEY, StorageScope.PROFILE, false)) {
+		if (!shouldAutoShowWelcome(storageService, configurationService)) {
 			return;
 		}
 		showWelcomeNotification(notificationService, commandService, storageService);
