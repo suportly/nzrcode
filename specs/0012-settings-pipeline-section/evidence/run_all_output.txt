@@ -1,0 +1,13 @@
+=== test_files_exist.sh ===
+PASS: Settings feature files present
+
+=== test_configuration_registered.sh ===
+PASS: NZRCode configuration registered with 4 settings
+
+=== test_no_new_deps.sh ===
+test_no_new_deps: OK
+
+=== test_i18n_strings.sh ===
+PASS: Settings strings localized
+
+Summary: all Settings smoke tests passed
