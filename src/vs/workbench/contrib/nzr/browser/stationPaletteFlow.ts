@@ -17,8 +17,8 @@ import { IQuickPickItem } from '../../../../platform/quickinput/common/quickInpu
  * these helpers, and routes the result.
  */
 
-export const PRESETS = ['django-react', 'expo-mobile', 'python-cli', 'lean'] as const;
-export type Preset = typeof PRESETS[number];
+export { PIPELINE_PRESETS as PRESETS } from './nzrPipelineSettings.js';
+export type { Preset } from './nzrPipelineSettings.js';
 
 export const DEFAULT_BRANCH = 'main';
 
