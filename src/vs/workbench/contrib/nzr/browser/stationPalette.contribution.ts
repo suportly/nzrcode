@@ -7,6 +7,7 @@ import { KeyCode, KeyMod } from '../../../../base/common/keyCodes.js';
 import { localize, localize2 } from '../../../../nls.js';
 import { Action2, registerAction2 } from '../../../../platform/actions/common/actions.js';
 import { ICommandService } from '../../../../platform/commands/common/commands.js';
+import { IConfigurationService } from '../../../../platform/configuration/common/configuration.js';
 import { ServicesAccessor } from '../../../../platform/instantiation/common/instantiation.js';
 import { KeybindingsRegistry, KeybindingWeight } from '../../../../platform/keybinding/common/keybindingsRegistry.js';
 import { INotificationService, Severity } from '../../../../platform/notification/common/notification.js';
@@ -14,7 +15,8 @@ import { IStationRegistryService } from '../../../../platform/nzr/common/station
 import { IQuickInputService } from '../../../../platform/quickinput/common/quickInput.js';
 import { IWorkspaceContextService } from '../../../../platform/workspace/common/workspace.js';
 import { MissionControlActiveContext } from './missionControl.contribution.js';
-import { buildStationQuickPickItems, DEFAULT_BRANCH, IStationPickItem, PRESETS, validateRepoPath } from './stationPaletteFlow.js';
+import { resolveAddStationDefaults } from './nzrPaletteDefaults.js';
+import { buildStationQuickPickItems, IStationPickItem, PRESETS, validateRepoPath } from './stationPaletteFlow.js';
 
 const NZR_CATEGORY = localize2('nzrCategory', 'NZR');
 
@@ -37,9 +39,19 @@ class AddStationAction extends Action2 {
 		const stationRegistry = accessor.get(IStationRegistryService);
 		const notificationService = accessor.get(INotificationService);
 		const workspaceContextService = accessor.get(IWorkspaceContextService);
+		const configurationService = accessor.get(IConfigurationService);
+
+		const defaults = resolveAddStationDefaults(configurationService);
+
+		const defaultDescription = localize('nzrAddStationPresetDefaultDescription', '(default)');
+		const orderedPresets = [defaults.preset, ...PRESETS.filter(p => p !== defaults.preset)];
+		const presetItems = orderedPresets.map(p => ({
+			label: p,
+			description: p === defaults.preset ? defaultDescription : undefined,
+		}));
 
 		const preset = await quickInputService.pick(
-			PRESETS.map(p => ({ label: p })),
+			presetItems,
 			{ placeHolder: localize('nzrAddStationPresetPlaceholder', 'Pick a preset') },
 		);
 		if (!preset) {
@@ -48,7 +60,7 @@ class AddStationAction extends Action2 {
 
 		const branch = await quickInputService.input({
 			prompt: localize('nzrAddStationBranchPrompt', 'Branch to track'),
-			value: DEFAULT_BRANCH,
+			value: defaults.branch,
 		});
 		if (branch === undefined) {
 			return;
@@ -67,7 +79,7 @@ class AddStationAction extends Action2 {
 
 		const station = await stationRegistry.addStation({
 			repoPath: repoPath.trim(),
-			branch: branch.trim() || DEFAULT_BRANCH,
+			branch: branch.trim() || defaults.branch,
 			preset: preset.label,
 		});
 
