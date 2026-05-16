@@ -48,6 +48,7 @@ export interface DebugVariable {
 export const enum MethodName {
     SystemHello = 'system.hello',
     SystemAuthenticate = 'system.authenticate',
+    SystemRegister = 'system.register',
 
     CommandsExecute = 'commands.execute',
     CommandsList = 'commands.list',
@@ -94,6 +95,7 @@ export const enum MethodName {
 export interface MethodParams {
     [MethodName.SystemHello]: undefined;
     [MethodName.SystemAuthenticate]: { readonly token: string };
+    [MethodName.SystemRegister]: { readonly deviceId: string; readonly deviceName: string; readonly apnsToken?: string };
 
     [MethodName.CommandsExecute]: { readonly command: string; readonly args?: readonly unknown[] };
     [MethodName.CommandsList]: undefined;
@@ -145,6 +147,7 @@ export interface MethodResult {
         readonly platform: string;
     };
     [MethodName.SystemAuthenticate]: { readonly ok: true };
+    [MethodName.SystemRegister]: { readonly registered: true };
 
     [MethodName.CommandsExecute]: { readonly value: unknown };
     [MethodName.CommandsList]: { readonly commands: readonly string[] };
