@@ -10,7 +10,7 @@
 ## Task list
 
 ### T001 — Smoke suite (RED)
-- **Status:** pending
+- **Status:** done
 - **Files:**
   - create: `test/nzrcode-command-wiring/{test_files_exist,test_commands_wired,test_no_new_deps,run_all}.sh`
   - create: `test/nzrcode-command-wiring/README.md`
@@ -22,7 +22,7 @@
   - [ ] Commit: `test(nzr-bridge): T001 add command-wiring smoke (RED)`.
 
 ### T002 — Wire `listPairedDevices` + `revokeIpad` in extension.ts
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T001
 - **Files:**
   - modify: `extensions/nzrcode-bridge/src/extension.ts`
@@ -40,7 +40,7 @@
   - [ ] Commit: `feat(nzr-bridge): T002 wire list + revoke palette commands`.
 
 ### T003 — Verify + push + PR
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T002
 - **Files:**
   - create: `specs/0016-bridge-command-wiring/evidence/run_all_output.txt`

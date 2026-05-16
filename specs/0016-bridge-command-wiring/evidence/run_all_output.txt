@@ -1,0 +1,10 @@
+=== test_files_exist.sh ===
+PASS: Command Wiring feature files present
+
+=== test_commands_wired.sh ===
+PASS: list + revoke palette commands wired
+
+=== test_no_new_deps.sh ===
+test_no_new_deps: OK
+
+Summary: all Command Wiring smoke tests passed
