@@ -330,7 +330,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T021 add event publisher with terminal.data chunked streaming`.
 
 ### T022 — `scm.ts` (status, diff, stage, commit)
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T016
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/rpc/scm.ts`
