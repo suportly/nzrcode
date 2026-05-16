@@ -1,0 +1,16 @@
+=== test_files_exist.sh ===
+PASS: Welcome feature files present
+
+=== test_contribution_registered.sh ===
+PASS: Welcome contribution registered
+
+=== test_command_registered.sh ===
+PASS: nzr.welcome.show command registered
+
+=== test_no_new_deps.sh ===
+test_no_new_deps: OK
+
+=== test_i18n_strings.sh ===
+PASS: Welcome strings localized
+
+Summary: all Welcome smoke tests passed
