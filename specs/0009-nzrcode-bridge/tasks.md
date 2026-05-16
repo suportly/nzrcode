@@ -473,7 +473,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `feat(nzrcode-bridge): T031 add relay push provider with timeout`.
 
 ### T032 — `inBandPushProvider.ts` (JSON-RPC notification fallback)
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T030, T013
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/push/inBandPushProvider.ts`
