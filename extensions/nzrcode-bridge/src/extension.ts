@@ -4,13 +4,16 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as vscode from 'vscode';
-import { maybeStartBridge, BridgeRuntime } from './bridge';
+import { maybeStartBridge, startPairableBridge, BridgeRuntime } from './bridge';
 import { PairedDeviceStore } from './pairing/pairedDevices';
 import { runListPairedDevicesCommand } from './pairing/listCommand';
 import type { QuickPickEntry } from './pairing/listCommand';
+import { runPairCommand } from './pairing/pairCommand';
+import type { PairWebviewHandle } from './pairing/pairCommand';
 import { runRevokeIpadCommand } from './pairing/revokeCommand';
 import type { RevokeQuickPickItem } from './pairing/revokeCommand';
-import { rotateToken } from './server/state';
+import { discoverEndpoints } from './pairing/endpoints';
+import { loadOrCreateState, rotateToken } from './server/state';
 import type { Logger } from './server/dispatcher';
 
 let _runtime: BridgeRuntime | undefined;
@@ -38,6 +41,49 @@ function registerListCommand(context: vscode.ExtensionContext, store: PairedDevi
 			showInformationMessage: (message) => { void vscode.window.showInformationMessage(message); },
 			now: () => Date.now(),
 		});
+	});
+}
+
+function openPairWebview(): PairWebviewHandle & { setHtml: (html: string) => void } {
+	const panel = vscode.window.createWebviewPanel(
+		'nzrcodeBridgePair',
+		'NZRCode: Pair iPad',
+		vscode.ViewColumn.One,
+		{ enableScripts: false, retainContextWhenHidden: true },
+	);
+	return {
+		setHtml: (html) => { panel.webview.html = html; },
+		dispose: () => panel.dispose(),
+	};
+}
+
+function registerPairCommand(
+	store: PairedDeviceStore,
+	channel: vscode.OutputChannel,
+	extensionVersion: string,
+): vscode.Disposable {
+	return vscode.commands.registerCommand('nzrcode-bridge.pairIpad', async () => {
+		try {
+			await runPairCommand({
+				loadOrCreateState: () => loadOrCreateState(),
+				startBridge: async (_state) => startPairableBridge({
+					serverVersion: extensionVersion,
+					logger: buildLogger(channel),
+				}),
+				discoverEndpoints: (port) => discoverEndpoints({ port }),
+				openWebview: (html) => {
+					const handle = openPairWebview();
+					handle.setHtml(html);
+					return { dispose: handle.dispose };
+				},
+				registerDevice: (args) => store.register(args),
+				attachApnsToken: (deviceId, apnsToken) => store.attachApnsToken(deviceId, apnsToken),
+				showInformationMessage: (message) => { void vscode.window.showInformationMessage(message); },
+			});
+		} catch (err) {
+			const reason = err instanceof Error ? err.message : String(err);
+			void vscode.window.showErrorMessage(`Pair iPad failed: ${reason}`);
+		}
 	});
 }
 
@@ -90,6 +136,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 		context.subscriptions.push({ dispose: () => { void _runtime?.stop(); } });
 	}
 
+	context.subscriptions.push(registerPairCommand(_store, channel, extensionVersion));
 	context.subscriptions.push(registerListCommand(context, _store));
 	context.subscriptions.push(registerRevokeCommand(context, _store));
 }
