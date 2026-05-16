@@ -38,5 +38,17 @@ The `NZR/CODE` wordmark and any future workbench surface that asks for
   (`apt-get install imagemagick`, `brew install imagemagick`); not a runtime
   dependency of NZRCode.
 
+## qrcode-generator (extensions/nzrcode-bridge)
+
+The QR webview rendered by the **NZRCode: Pair iPad** command bundles
+`qrcode-generator` locally — no CDN — to draw the pairing QR code.
+
+- Project: https://github.com/kazuhikoarase/qrcode-generator
+- Version pinned: ^1.4.4 (declared in
+  [`extensions/nzrcode-bridge/package.json`](./extensions/nzrcode-bridge/package.json))
+- License: MIT
+- Why: produces a deterministic SVG / data-URI QR encoding usable
+  inside a CSP-locked webview, with zero transitive dependencies.
+
 No further third-party material was adapted into NZRCode at the time this
 file was written. Future additions land here as new sections.
