@@ -471,4 +471,7 @@ import './contrib/nzr/browser/missionControl.contribution.js';
 // NZRCode — Mission Control ViewContainer + Stations view
 import './contrib/nzr/browser/stationView.contribution.js';
 
+// NZRCode — Gate Queue ViewContainer (Auxiliary Bar)
+import './contrib/nzr/browser/gateQueue.contribution.js';
+
 //#endregion
