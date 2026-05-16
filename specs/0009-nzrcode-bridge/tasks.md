@@ -446,7 +446,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
 ### Phase 6 — Push notifications + provider
 
 ### T030 — `IPushProvider` interface + `FakePushProvider`
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T025
 - **Files:**
   - create: `extensions/nzrcode-bridge/src/push/IPushProvider.ts`
