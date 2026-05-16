@@ -546,7 +546,7 @@ Total: 38 tasks (7 fases). Layout: tudo dentro do repo `vscode/` (ver ADR-1). Pa
   - [ ] Commit: `test(nzrcode-bridge): T036 add smoke suite and evidence transcript`.
 
 ### T037 — Cold-start benchmark (8 vCPU / 16 GB methodology)
-- **Status:** pending
+- **Status:** done
 - **Depends on:** T036
 - **Files:**
   - create: `test/nzrcode-bridge/bench_cold_start.sh`
