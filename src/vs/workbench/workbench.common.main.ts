@@ -480,4 +480,7 @@ import './contrib/nzr/browser/stationPalette.contribution.js';
 // NZRCode — Welcome notification (first-run + nzr.welcome.show command)
 import './contrib/nzr/browser/welcome.contribution.js';
 
+// NZRCode — Settings (nzrcode.* configuration schema)
+import './contrib/nzr/browser/settings.contribution.js';
+
 //#endregion
