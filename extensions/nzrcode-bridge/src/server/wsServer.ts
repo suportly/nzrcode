@@ -43,6 +43,21 @@ export interface BridgeConnection {
     readonly onClose: (handler: (code: number, reason: string) => void) => void;
     /** Close with a WebSocket close code and reason text. */
     readonly close: (code: number, reason?: string) => void;
+    /**
+     * The deviceId this connection was authenticated as, or `undefined`
+     * before authentication (and for pending-pair matches that have not
+     * yet completed `system.register`). Populated by the dispatcher
+     * after a successful auth whose token matched a persistent entry
+     * in the per-device tokens map.
+     */
+    readonly authenticatedDeviceId: string | undefined;
+    /**
+     * @internal Called by the dispatcher on successful authentication
+     * with a persistent token match. Consumers other than the
+     * dispatcher must not call this — the field would otherwise lose
+     * its invariant ("set exactly once, after auth, by the bridge").
+     */
+    readonly _setAuthenticatedDeviceId: (deviceId: string) => void;
 }
 
 export interface BridgeWsServer {
@@ -68,6 +83,8 @@ function wrapConnection(ws: WebSocket, req: IncomingMessage): BridgeConnection {
     const remoteAddress =
         (req.socket as { remoteAddress?: string }).remoteAddress ?? '127.0.0.1';
 
+    let authenticatedDeviceId: string | undefined;
+
     return {
         isOpen: () => ws.readyState === (ws as WebSocket & { OPEN: number }).OPEN,
         remoteAddress,
@@ -89,6 +106,12 @@ function wrapConnection(ws: WebSocket, req: IncomingMessage): BridgeConnection {
             if (ws.readyState === (ws as WebSocket & { OPEN: number }).OPEN) {
                 ws.close(code, reason);
             }
+        },
+        get authenticatedDeviceId(): string | undefined {
+            return authenticatedDeviceId;
+        },
+        _setAuthenticatedDeviceId: (deviceId: string) => {
+            authenticatedDeviceId = deviceId;
         },
     };
 }
